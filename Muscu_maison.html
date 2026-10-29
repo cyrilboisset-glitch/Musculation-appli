@@ -296,6 +296,18 @@ Object.assign(AN.A,{
  b:{x:0,y:-53,l:[10,6,.15,1]},k:[{a:[80,180]},{a:[163,174]}],
  p:[[1,'⬆️ Poussée · 1 s','Pousse au-dessus de la tête, dos collé au dossier',1],[2,'⬇️ Descente · 2 s','Redescends à hauteur d\'oreilles, coudes sous les poignets',.55]],
  w:'Ne cambre pas le bas du dos : gaine les abdos.'},
+'Développé Arnold':{v:'f',pr:[{c:'chairf',x:-23}],m:['delt'],m2:['tri','trap'],db:{h:'aA',w:1},tr:'ah',
+ b:{x:0,y:-53,l:[10,6,.15,1]},k:[{a:[12,196,.3,1]},{a:[80,180,1,1]},{a:[163,174,1,1]},{a:[80,180,1,1]}],
+ p:[[.8,'🔄 Ouverture','Coudes qui s\'écartent, paumes qui tournent vers l\'avant',.8],[.8,'⬆️ Poussée','Pousse au-dessus de la tête',1],[1,'⬇️ Descente','Redescends à hauteur d\'oreilles',.55],[1,'🔄 Fermeture','Ramène les altères devant le visage, paumes vers toi',.5]],
+ w:'Rotation fluide et lente : pas d\'à-coup sur l\'épaule.'},
+'Oiseau':{v:'s',an:'la',m:['delt'],m2:['dos','trap'],db:{h:'aA',w:1},tr:'ah',
+ b:{x:0,y:-4,t:102,l:[96,70]},k:[{a:[78,78,1,1]},{a:[82,76,.15,.15]},{a:[82,76,.15,.15]}],
+ p:[[1,'↔️ Ouverture · 1 s','Ouvre les bras sur les côtés, coudes légèrement fléchis',1],[.6,'⏸ Serre','Serre les omoplates en haut',1],[2,'⬇️ Descente · 2 s','Redescends lentement sous la poitrine',.55]],
+ w:'Ne remonte pas le buste pour lever les bras : dos plat et fixe.'},
+'Élévations frontales':{v:'s',m:['delt'],m2:['pec','trap'],db:{h:'aA',w:0},tr:'ah',
+ k:[{a:[-2,2]},{a:[88,86]}],
+ p:[[1,'⬆️ Montée · 1 s','Bras presque tendus, monte jusqu\'à hauteur d\'épaules',1],[2,'⬇️ Descente · 2 s','Freine la descente, sans balancer le buste',.55]],
+ w:'Ne cambre pas et ne monte pas plus haut que les épaules.'},
 'Élévations latérales':{v:'f',m:['delt'],m2:['trap'],db:{h:'aA',w:0},tr:'ah',
  k:[{a:[8,4]},{a:[86,80]}],
  p:[[1,'⬆️ Montée · 1 s','Coudes légèrement fléchis, monte jusqu\'aux épaules',1],[2,'⬇️ Descente · 2 s','Freine la descente, ne hausse pas les épaules',.55]],
@@ -488,6 +500,9 @@ pecs|Développé en pont|En pont fessier (bassin haut), développé des altères
 pecs|Svend press altère|Debout, une altère serrée entre les paumes contre la poitrine, pousse devant toi en serrant.|svend press haltère
 epaules|Développé épaules|Assis sur la chaise, dos droit, pousse les altères au-dessus de la tête.|développé épaules haltères assis
 epaules|Élévations latérales|Debout, bras fléchis, monte les altères sur les côtés jusqu'à hauteur d'épaules.|élévations latérales haltères
+epaules|Oiseau|Buste penché dos plat, altères sous la poitrine, ouvre les bras sur les côtés coudes légèrement fléchis.|oiseau haltères deltoïde postérieur
+epaules|Développé Arnold|Assis sur la chaise, altères devant le visage paumes vers toi : ouvre les coudes en tournant les paumes vers l'avant et pousse au-dessus de la tête.|développé arnold haltères
+epaules|Élévations frontales|Debout, monte les altères devant toi bras presque tendus jusqu'à hauteur d'épaules, redescends lentement.|élévations frontales haltères
 biceps|Curl alterné|Debout, coudes collés, monte une altère paume vers le haut puis redescends lentement.|curl biceps haltères
 biceps|Curl marteau|Paumes face à face, monte les altères sans bouger les coudes.|curl marteau
 biceps|Curl concentré|Assis sur la chaise, coude contre la cuisse, curl lent d'une altère.|curl concentré
@@ -555,7 +570,7 @@ $('#md').onclick=ev=>{const b=ev.target.closest('button');if(!b)return;mode=b.da
 const url=x=>links[x.n]||'https://www.youtube.com/results?search_query='+encodeURIComponent(x.q+' exercice');
 // Ordre optimal : polyarticulaires des gros muscles d'abord (on est frais), puis isolation, petits muscles,
 // et enfin bas du dos et gainage, qui stabilisent tous les autres exercices et ne doivent pas être fatigués avant.
-const PO=new Set(['Développé couché altères','Développé au sol','Développé serré','Développé en pont','Développé épaules','Dips sur chaise','Rowing un bras','Rowing penché','Fentes arrière','Squat sur chaise','Squat gobelet','Squat bulgare','Soulevé de terre roumain','Soulevé une jambe','Good morning']),
+const PO=new Set(['Développé couché altères','Développé au sol','Développé serré','Développé en pont','Développé épaules','Développé Arnold','Dips sur chaise','Rowing un bras','Rowing penché','Fentes arrière','Squat sur chaise','Squat gobelet','Squat bulgare','Soulevé de terre roumain','Soulevé une jambe','Good morning']),
 MO=['cuisses','fessiers','ischios','dos','pecs','epaules','triceps','biceps','mollets','lombaires','abdos'],
 TI=['💥 Polyarticulaires — gros muscles, tant que tu es frais','🎯 Isolation — termine les gros muscles','💪 Petits muscles — bras et mollets','🧱 Bas du dos','🔥 Gainage — toujours en dernier'],
 tier=x=>x.m=='abdos'?4:x.m=='lombaires'?3:['biceps','triceps','mollets'].includes(x.m)?2:PO.has(x.n)?0:1,
