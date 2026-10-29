@@ -4,11 +4,11 @@
 <title>Muscu maison</title>
 <style>
 :root{--bg:#f4f4f1;--fg:#1c1c1c;--card:#fff;--mut:#707070;--ac:#e8590c;--bd:#d9d9d4;--base:#d2d2cc;--zone:#b9b9b2;--work:#e8590c;--rest:#2b8a3e;--pause:#1c7ed6;--fig:#3d4451;--fig2:#9aa0aa;--prop:#d6d2c8;--prop2:#b4afa3;--mat:#8db4cc;--mu:var(--ac);--ms:#2b8a3e;--eye:#fff;--dbp:#2f3136;--dbh:#8a8d93;--trj:var(--ac);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141414;--fg:#eee;--card:#222;--mut:#9a9a9a;--bd:#3a3a3a;--base:#333;--zone:#555;--fig:#d9dce1;--fig2:#7d828a;--prop:#383838;--prop2:#555;--mat:#2f5368;--eye:#222;--dbp:#e6e6e6;--dbh:#999;--ms:#51cf66}}
-:root[data-theme="dark"]{--bg:#141414;--fg:#eee;--card:#222;--mut:#9a9a9a;--bd:#3a3a3a;--base:#333;--zone:#555;--fig:#d9dce1;--fig2:#7d828a;--prop:#383838;--prop2:#555;--mat:#2f5368;--eye:#222;--dbp:#e6e6e6;--dbh:#999;--ms:#51cf66}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141414;--fg:#eee;--card:#222;--mut:#9a9a9a;--bd:#3a3a3a;--base:#333;--zone:#555;--fig:#d9dce1;--fig2:#7d828a;--prop:#383838;--prop2:#555;--mat:#2f5368;--eye:#222;--dbp:#e6e6e6;--dbh:#999;--ms:#51cf66;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141414;--fg:#eee;--card:#222;--mut:#9a9a9a;--bd:#3a3a3a;--base:#333;--zone:#555;--fig:#d9dce1;--fig2:#7d828a;--prop:#383838;--prop2:#555;--mat:#2f5368;--eye:#222;--dbp:#e6e6e6;--dbh:#999;--ms:#51cf66;color-scheme:dark}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}[hidden]{display:none!important}.nav{display:flex;justify-content:space-between;align-items:center;margin:8px 0}.cg{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}.cg i{font-style:normal;font-size:12px;color:var(--mut)}.cg button{padding:4px 0;min-height:48px;font-size:15px;border-radius:8px}.cg small{display:block;font-size:10px;line-height:1.2;min-height:12px}.cg .td{border-color:var(--ac)}.cg .dn{background:var(--ac);color:#fff;border-color:var(--ac)}.cg .sl{box-shadow:inset 0 0 0 2px var(--fg)}.row button.on{border-color:var(--ac);box-shadow:inset 0 0 0 2px var(--ac)}.k3{grid-template-columns:repeat(3,1fr)}.opt.k3 button{padding:10px 6px;font-size:14px;text-align:center}#tm[data-p="ÉTIRE"]{background:var(--rest)}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.4 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding:14px;max-width:560px;margin:auto}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.4 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding-block:14px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));max-width:560px;margin:auto}
 h1{font-size:22px;margin:4px 0 2px}h3{margin:18px 0 6px;color:var(--ac)}
 .sub{color:var(--mut);margin:0 0 10px;font-size:14px}
 .bodies{display:flex;gap:6px;justify-content:center}
@@ -31,12 +31,15 @@ input{font:inherit;width:100%;padding:8px;border:1px solid var(--bd);border-radi
 .bt{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.bt a,.bt button{padding:7px 12px;font-size:14px}
 details{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:10px 12px;margin:14px 0}
 summary{font-weight:600}li{margin:5px 0;font-size:14px}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));max-width:calc(100% - 32px);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;z-index:20;box-shadow:0 4px 16px rgba(0,0,0,.25)}.ed{margin-top:8px}.ed label{margin-bottom:4px}.er{display:flex;gap:6px}.er input{flex:1;min-width:0}.er button{padding:8px 12px}
 #tm{position:fixed;inset:0;background:var(--work);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:20px;z-index:9}
 #tm[hidden]{display:none}#tm[data-p=REPOS]{background:var(--rest)}#tm[data-p=PAUSE]{background:var(--pause)}
 #tp{font-size:22px;letter-spacing:3px;font-weight:700}#tc{font-size:120px;font-weight:800;line-height:1}#tn{font-size:22px}
 #tm button{background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.4)}
 .anv{width:100%;height:auto;max-height:240px;display:block}.anv line{stroke-linecap:round}.anv .n{stroke:var(--fig)}.anv .f{stroke:var(--fig2)}.anv .nf{fill:var(--fig)}.anv .ff{fill:var(--fig2)}.anv .eye{fill:var(--eye)}.anv .mouth{fill:none;stroke:var(--eye);stroke-width:1.2;stroke-linecap:round}.anv .mu{fill:var(--mu)}.anv .ms{fill:var(--ms)}.anv .dp{fill:var(--dbp)}.anv .dh{stroke:var(--dbh)}.anv .dhc{fill:var(--dbh)}.anv .pr{fill:var(--prop)}.anv .pr2{fill:var(--prop2)}.anv .pr3{stroke:var(--prop2)}.anv .mat{fill:var(--mat)}.anv .fl{stroke:var(--prop2)}.anv .flr{fill:var(--prop);opacity:.45}.anv .gh{opacity:.13}.anv .trp{fill:none;stroke:var(--prop2);stroke-width:1.2;stroke-dasharray:4 3}.anv path.nf{stroke:var(--fig);stroke-width:.8;stroke-linejoin:round}.anvs{display:flex;gap:6px}.anvs figure{flex:1;margin:0;min-width:0}.anvs figcaption{text-align:center;font-size:11px;color:var(--mut);margin-top:2px}.anv .trj{fill:none;stroke:var(--trj);stroke-width:1.3;stroke-dasharray:3 3;opacity:.7}.anw{background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:6px 8px 8px;margin:8px 0}.anl{display:flex;align-items:center;gap:6px;font-size:14px;margin-top:4px}.anp{flex:1}button.anb{padding:3px 9px;font-size:12px;border-radius:8px}.anbar{height:3px;background:var(--bd);border-radius:2px;overflow:hidden;margin:5px 0 4px}.anbar i{display:block;height:100%;background:var(--ac);width:0}.anc{font-size:13px;color:var(--mut);min-height:18px}.anw2{font-size:12.5px;margin-top:4px}#ta{width:min(92vw,440px)}#ta .anv{max-height:30vh}#ta figcaption{color:rgba(255,255,255,.8)}#ta .anl{justify-content:center;font-size:16px}#ta .anp{flex:none}#ta .anc{color:rgba(255,255,255,.9);font-size:14px}#ta .anbar{background:rgba(255,255,255,.3)}#ta .anbar i{background:#fff}#tm{--fig:#fff;--fig2:rgba(255,255,255,.5);--prop:rgba(255,255,255,.2);--prop2:rgba(255,255,255,.38);--mat:rgba(255,255,255,.3);--mu:#ffe066;--ms:#ffe066;--eye:rgba(0,0,0,.45);--dbp:#1c1c1c;--dbh:rgba(0,0,0,.55);--trj:#fff}#tm.ha #tc{font-size:72px}#tm.ha{gap:6px;justify-content:flex-start;overflow:auto}
 </style></head><body>
+<div id="nojs" class="c"><b>⚠️ Cette visionneuse bloque le JavaScript de l'appli.</b><p>C'est le cas de Chrome sur Android pour les fichiers ouverts depuis le téléphone. Ouvre l'appli en ligne dans Chrome :<br><a href="https://claude.ai/artifact/3yPMYKWJUhHGBQocS52X2f">claude.ai/artifact/3yPMYKWJUhHGBQocS52X2f</a></p></div>
+<script>document.getElementById('nojs').remove()</script>
 
 <section id="s1">
 <h1>💪 Quels muscles ?</h1>
@@ -89,6 +92,7 @@ summary{font-weight:600}li{margin:5px 0;font-size:14px}
 </div>
 <button id="b4" style="width:100%;margin-top:8px">← Retour</button>
 </section>
+<div id="toast" role="status" hidden></div>
 <div id="tm" hidden><div id="ta" hidden></div><div id="tp"></div><div id="tc"></div><div id="tn"></div><div id="ti"></div>
 <div><button id="pa">Pause</button> <button id="sk">Passer</button> <button id="cl">Fermer</button></div><button id="ts" hidden>🧘 Enchaîner les étirements</button></div>
 
@@ -518,6 +522,7 @@ Object.assign(AN.A,{
 if(typeof AN=='undefined')window.AN={A:{},has:()=>false,scan(){},mount(){},stop(){}};
 const ls={g(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},s(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 const $=s=>document.querySelector(s);
+function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(t._t);t._t=setTimeout(()=>{t.hidden=true},2800)}
 const M={epaules:'Épaules',pecs:'Pectoraux',biceps:'Biceps',triceps:'Triceps',abdos:'Abdos',dos:'Dos / trapèzes',lombaires:'Lombaires',fessiers:'Fessiers',cuisses:'Cuisses',ischios:'Ischios',mollets:'Mollets'};
 const D=`pecs|Développé couché altères|Dos sur le lit, altères au-dessus de la poitrine, descends aux pectoraux puis pousse.|développé couché haltères
 pecs|Écartés altères|Allongé sur le lit, bras légèrement fléchis, ouvre en arc puis ramène.|écartés haltères
@@ -633,9 +638,9 @@ if(stl.length)h+=`<h3>🧘 Retour au calme — étirements</h3><p class="sub">Mu
 $('#list').innerHTML=h;AN.scan($('#list'));const n=list.length;$('#inf').textContent=ci?`Circuit brûle-graisse · ${n} exos × ${l.cr} tours · ≈ ${Math.round(((60*n-20)*l.cr+90*(l.cr-1))/60)} min`:t?`Tabata · ${n} exercices`:`${l.s} séries × ${l.r} reps · repos ${l.rest} s`}
 // remplace un exercice par le suivant du même muscle (ou du circuit vélo) qui n'est pas déjà dans la séance
 function swap(n){const x=cur.find(y=>y.n==n);if(!x)return;const pool=kind=='velo'?[...new Set([...V.map(v=>D.find(y=>y.n==v)),...D.filter(y=>y.m==x.m)])]:D.filter(y=>y.m==x.m),i=pool.indexOf(x),
-nx=[...pool.slice(i+1),...pool.slice(0,i)].find(y=>!cur.includes(y));if(!nx){alert('Pas d\'autre exercice disponible pour ce muscle.');return}
+nx=[...pool.slice(i+1),...pool.slice(0,i)].find(y=>!cur.includes(y));if(!nx){toast('Pas d\'autre exercice disponible pour ce muscle.');return}
 cur[cur.indexOf(x)]=nx;show();const e=$('#list').querySelector(`[data-sw="${CSS.escape(nx.n)}"]`),c=e&&e.closest('.c');if(c){c.scrollIntoView({block:'center'});c.classList.add('fl')}}
-function gen(){if(!lvl){alert('Choisis un niveau');return}
+function gen(){if(!lvl){toast('Choisis d\'abord ton niveau.');$('#lv').scrollIntoView({block:'center'});return}
 const l=L[lvl],t=mode=='tab';cfg={w:+$('#tw').value||20,r:+$('#tr').value||0,n:+$('#tn2').value||1,p:+$('#tp2').value||0};
 cur=kind=='velo'?V.slice(0,[0,7,9,11][lvl]).map(n=>D.find(y=>y.n==n)):[...sel].flatMap(m=>{const E=D.filter(x=>x.m==m),ne=mode=='circ'?Math.max(1,Math.min(l.ex,Math.floor(10/sel.size))):l.ex;return E.slice(0,Math.min(ne,E.length)).map((_,i)=>E[(ro*ne+i)%E.length])});
 show();$('#ttl').textContent=(kind=='velo'?'🚴 Vélo · ':'')+l.n;
@@ -648,8 +653,9 @@ $('#list').addEventListener('click',ev=>{const b=ev.target.closest('button');if(
 if(b.dataset.sw!=null){swap(b.dataset.sw);return}
 if(b.dataset.stg!=null){run(stl.flatMap(x=>hold(x)));return}
 if(b.dataset.tg!=null){const w=b.closest('.c').querySelector('.anw');if(w)w.hidden=!w.hidden;return}
-if(b.dataset.e){const x=D.find(y=>y.n==b.dataset.e),v=prompt('Lien YouTube pour « '+x.n+' » (vide = lien par défaut) :',links[x.n]||'');if(v===null)return;v.trim()?links[x.n]=v.trim():delete links[x.n];ls.s('links',links);
-b.closest('.c').querySelector('a').href=url(x)}
+if(b.dataset.e){const c=b.closest('.c'),old=c.querySelector('.ed');if(old){old.remove();return}const x=D.find(y=>y.n==b.dataset.e),j=D.indexOf(x);
+b.closest('.bt').insertAdjacentHTML('afterend',`<div class="ed"><label for="ln${j}">Lien YouTube (vide = recherche automatique)</label><div class="er"><input id="ln${j}" type="url" inputmode="url" placeholder="https://youtu.be/…" value="${(links[x.n]||'').replace(/"/g,'&quot;')}"><button data-es="${x.n}">Enregistrer</button></div></div>`);c.querySelector('.ed input').focus()}
+if(b.dataset.es){const x=D.find(y=>y.n==b.dataset.es),c=b.closest('.c'),v=c.querySelector('.ed input').value.trim();v?links[x.n]=v:delete links[x.n];ls.s('links',links);c.querySelector('.bt a').href=url(x);c.querySelector('.ed').remove();toast(v?'Lien enregistré':'Lien par défaut rétabli')}
 if(b.dataset.h)run(hold(D.find(y=>y.n==b.dataset.h)));if(b.dataset.rest)run([{t:'REPOS',n:'Récupère',d:L[lvl].rest}])});
 $('#tab').onclick=()=>{if(kind=='st'){run(list.flatMap(x=>hold(x)));return}
 if(mode=='circ'){const R=L[lvl].cr,s=[];for(let r=1;r<=R;r++){list.forEach((x,i)=>{s.push({t:'TRAVAIL',n:x.n,d:40,i:`Tour ${r}/${R} · exo ${i+1}/${list.length}`,x:x.n});const nx=list[i+1];if(nx)s.push({t:'PAUSE',n:'Prochain : '+nx.n,d:20,x:nx.n})});if(r<R)s.push({t:'REPOS',n:`Fin du tour ${r} — bois un peu`,d:90,x:list[0].n})}run(s);return}const s=[];list.forEach((x,i)=>{if(i&&cfg.p)s.push({t:'PAUSE',n:'Prochain : '+x.n,d:cfg.p,x:x.n});for(let k=1;k<=cfg.n;k++){s.push({t:'TRAVAIL',n:x.n,d:cfg.w,i:'Tour '+k+'/'+cfg.n,x:x.n});if(cfg.r&&k<cfg.n)s.push({t:'REPOS',n:x.n,d:cfg.r,i:'Tour '+k+'/'+cfg.n,x:x.n})}});run(s)};
