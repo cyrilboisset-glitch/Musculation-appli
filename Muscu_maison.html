@@ -93,7 +93,9 @@ summary{font-weight:600}li{margin:5px 0;font-size:14px}
 <div><button id="pa">Pause</button> <button id="sk">Passer</button> <button id="cl">Fermer</button></div><button id="ts" hidden>🧘 Enchaîner les étirements</button></div>
 
 <script>
-const AN=(()=>{
+if(!Array.prototype.flatMap)Array.prototype.flatMap=function(f,t){return[].concat.apply([],this.map(f,t))};
+var AN=(()=>{
+const nv=(a,b)=>a!=null?a:b;
 // ---------- moteur : pose 2D articulée (unités ≈ cm, sol à y=0, y vers le bas) relevée en 3D, puis filmée de profil et de face ----------
 const R=Math.PI/180,dr=a=>[Math.sin(a*R),Math.cos(a*R)],ag=(x,y)=>Math.atan2(x,y)/R,
 ad=(p,a,l)=>[p[0]+Math.sin(a*R)*l,p[1]+Math.cos(a*R)*l],r1=n=>Math.round(n*10)/10;
@@ -106,7 +108,7 @@ function solve(P,X){const F=X.v=='f',o=P.t-180;
   J.as=F?ad(sh,pd,K.sw):sh;J.As=F?ad(sh,pd,-K.sw):sh;
   J.lh=F?ad(hp,pd,K.hw):hp;J.Lh=F?ad(hp,pd,-K.hw):hp;
   for(const k of 'aAlL'){const arm=k=='a'||k=='A',m=F&&(k=='A'||k=='L'),s=P[k],r=J[k+(arm?'s':'h')],L1=arm?K.ua:K.th,L2=arm?K.fa:K.sh;let u,f,s1=1,s2=1;
-   if(Array.isArray(s)){u=m?o-s[0]:s[0]+o;f=m?o-s[1]:s[1]+o;s1=s[2]??1;s2=s[3]??s1}
+   if(Array.isArray(s)){u=m?o-s[0]:s[0]+o;f=m?o-s[1]:s[1]+o;s1=nv(s[2],1);s2=nv(s[3],s1)}
    else{if(!full)continue;[u,f]=ik(r,s,L1,L2,s.s)}
    const j1=ad(r,u,L1*s1),j2=ad(j1,f,L2*s2);J[k+'u']=u;J[k+'f']=f;J[k+'1']=s1;J[k+'2']=s2;
    if(arm){J[k+'e']=j1;J[k+'w']=j2;J[k+'h']=ad(j2,f,4*s2)}
@@ -118,7 +120,7 @@ function solve(P,X){const F=X.v=='f',o=P.t-180;
 function mix(a,b,u){if(typeof a=='number')return typeof b=='number'?a+(b-a)*u:a;if(Array.isArray(a))return a.map((v,i)=>mix(v,b[i],u));if(a&&typeof a=='object'){const r={};for(const k in a)r[k]=k=='s'?a[k]:mix(a[k],b[k],u);return r}return a}
 const D0={x:0,y:-91,t:180,n:0,e:0,a:[-4,4],l:[0,0],ds:1};
 function prep(X){if(X.K)return X;const F=X.v=='f';
- X.K=X.k.map(k=>{const P={...D0,...X.b,...k};
+ X.K=X.k.map(k=>{const P=Object.assign({},D0,X.b,k);
   if(P.A==null)P.A=F&&!Array.isArray(P.a)?{x:2*P.x-P.a.x,y:P.a.y,s:-P.a.s}:P.a;
   if(P.L==null)P.L=F&&!Array.isArray(P.l)?{x:2*P.x-P.l.x,y:P.l.y,s:-P.l.s}:P.l;
   if(P.F==null&&P.f!=null)P.F=P.f;return P});
@@ -136,14 +138,14 @@ function at(X,t){let x=((t%X.T)+X.T)%X.T,i=0;while(i<X.p.length-1&&x>X.p[i][0]){
 const LAT={s:16,e:17,w:15,h:15,p:8.5,k:9.5,a:9,t:10},V3=(a,b,c)=>[a,b,c],
 add3=(p,q,k=1)=>[p[0]+q[0]*k,p[1]+q[1]*k,p[2]+q[2]*k],dot=(p,q)=>p[0]*q[0]+p[1]*q[1]+p[2]*q[2],
 nrm=p=>{const l=Math.hypot(p[0],p[1],p[2])||1;return[p[0]/l,p[1]/l,p[2]/l]},crs=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
-function lift(J,P,X){const md=X.md,Z=X.z||{},B=X.base??-57,p={};
+function lift(J,P,X){const md=X.md,Z=X.z||{},B=nv(X.base,-57),p={};
  const m=(q,c)=>md=='s'?V3(q[0],q[1],c):md=='f'?V3(c,q[1],q[0]):V3(q[0],B-c,-q[1]),
  mv=v=>md=='s'?V3(v[0],v[1],0):md=='f'?V3(0,v[1],v[0]):V3(v[0],0,-v[1]);
- for(const n of['hp','nb','hd'])p[n]=m(J[n],Z[n]??0);
+ for(const n of['hp','nb','hd'])p[n]=m(J[n],nv(Z[n],0));
  for(const k of'aAlL'){const arm=k=='a'||k=='A',sg=md=='s'&&(k=='A'||k=='L')?-1:1,ns=arm?'sewh':'hkat',ls=arm?[K.ua,K.fa,4]:[K.th,K.sh,md=='f'?10:0];
-  const ex=[0,ls[0]*Math.sqrt(Math.max(0,1-J[k+'1']**2)),ls[1]*Math.sqrt(Math.max(0,1-J[k+'2']**2)),arm?ls[2]*Math.sqrt(Math.max(0,1-J[k+'2']**2)):ls[2]];let acc=0;
+  const ex=[0,ls[0]*Math.sqrt(Math.max(0,1-J[k+'1']*J[k+'1'])),ls[1]*Math.sqrt(Math.max(0,1-J[k+'2']*J[k+'2'])),arm?ls[2]*Math.sqrt(Math.max(0,1-J[k+'2']*J[k+'2'])):ls[2]];let acc=0;
   for(let i=0;i<4;i++){const n=k+ns[i],g=arm?ns[i]:ns[i]=='h'?'p':ns[i];acc+=ex[i];
-   const base=Z[n]??(md=='s'?(Z[g]??LAT[g])*sg:0);p[n]=m(J[n],base+acc*sg)}}
+   const base=nv(Z[n],md=='s'?nv(Z[g],LAT[g])*sg:0);p[n]=m(J[n],base+acc*sg)}}
  const u=mv(dr(P.t)),lat=md=='s'?[0,0,1]:mv(dr(P.t-90)),nf=md=='s'?mv(dr(P.t-90)):md=='f'?[1,0,0]:[0,-1,0],ax=md=='s'?[0,0,1]:md=='f'?[1,0,0]:[0,-1,0];
  return{p,u,lat,nf,ax,face:md=='s'?mv(dr(P.t+P.n-90)):nf,hu:mv(dr(P.t+P.n)),ln:a=>md=='s'?mv(dr(a+90)):ax,mv}}
 const CAM={s:{p:q=>[q[0],q[1]],d:q=>q[2],v:[0,0,1]},f:{p:q=>[q[2],q[1]],d:q=>q[0],v:[1,0,0]},t:{p:q=>[q[0],-q[2]],d:q=>-q[1],v:[0,-1,0]}},
@@ -181,7 +183,7 @@ function dumb(h3,a3,s,cam){const p1=add3(h3,a3,-7.5*s),p2=add3(h3,a3,7.5*s),q=[p
  return plate(q[0],as,cam)+L(cam.p(p1),cam.p(p2),2.8*s,'dh')+plate(q[1],as,cam)}
 function bellAt(Q,P,X,k,cam,it){const B=X.db,p=Q.p;let h,a;
  if(B.h=='hip'){h=add3(p.hp,Q.nf,12);a=Q.lat}
- else{h=B.h=='c'?p.ah.map((v,i)=>(v+p.Ah[i])/2):p[k+'h'];const fa=Q.J[(B.h=='c'?'a':k)+'f'],w=B.h=='c'?(B.w??1):(k=='A'?P.W:P.w)??B.w??0;
+ else{h=B.h=='c'?p.ah.map((v,i)=>(v+p.Ah[i])/2):p[k+'h'];const fa=Q.J[(B.h=='c'?'a':k)+'f'],w=B.h=='c'?nv(B.w,1):nv(k=='A'?P.W:P.w,nv(B.w,0));
   a=B.o=='a'?Q.mv(dr(fa)):B.o=='t'?Q.u:nrm(add3(Q.ax.map(v=>v*(1-w)),Q.mv(dr(fa+90)),w))}
  it.push({d:cam.d(h)+.5,s:dumb(h,a,P.ds,cam)})}
 function fig(Q,P,X,cam,ef,g){const p=Q.p,J=Q.J,it=[],pj=n=>cam.p(p[n]),dp=n=>cam.d(p[n]),hd=dp('hp');
@@ -212,13 +214,13 @@ function boxes(q,X){const b=(x0,x1,y0,y1,z0,z1,c,r=1.5)=>({x0,x1,y0,y1,z0,z1,c,r
  switch(q.c){case'mat':o.push(b(q.x0,q.x1,-2.5,0,-32,32,'mat',1.2));break;
   case'matt':o.push(b(q.x0,q.x1,-2.5,0,-q.y1,-q.y0,'mat',4));break;
   case'chair':chair(q.x,q.b=='l');break;case'chairf':chair(-12,1);break;
-  case'bed':bed(q.x0,q.x1,q.h||48,q.z0??-45,q.z1??45,q.p);break;case'bedt':bed(q.x0,q.x1,48,-q.y1,-q.y0,'l');break;
+  case'bed':bed(q.x0,q.x1,q.h||48,nv(q.z0,-45),nv(q.z1,45),q.p);break;case'bedt':bed(q.x0,q.x1,48,-q.y1,-q.y0,'l');break;
   case'wall':o.push(b(q.s=='l'?q.x-9:q.x,q.s=='l'?q.x:q.x+9,-215,0,-75,75,'pr',0))}return o}
 function rect(B,cam){if(cam==CAM.s)return[B.x0,B.y0,B.x1,B.y1];if(cam==CAM.f)return[B.z0,B.y0,B.z1,B.y1];return[B.x0,-B.z1,B.x1,-B.z0]}
 function props(X,cam,hd,front){let s='';for(const q of X.pr||[]){const bx=boxes(q,X),c=[0,1,2].map(i=>bx.reduce((a,B)=>a+[B.x0+B.x1,B.y0+B.y1,B.z0+B.z1][i]/2,0)/bx.length),fr=cam.d(c)>hd+12&&q.c!='mat'&&q.c!='matt';
   if(fr!=front)continue;for(const B of bx){const r=rect(B,cam);s+=`<rect x="${r1(r[0])}" y="${r1(r[1])}" width="${r1(r[2]-r[0])}" height="${r1(r[3]-r[1])}" rx="${B.r}" class="${B.c}${fr?' trp':''}"/>`}}return s}
 // ---------- cadrage, trajectoire, fantômes (calculés une fois par exercice et par vue) ----------
-function pose3(X,t){const r=at(X,t),J=solve(r.P,X),Q=lift(J,r.P,X);Q.J=J;return{...r,Q}}
+function pose3(X,t){const r=at(X,t),J=solve(r.P,X),Q=lift(J,r.P,X);Q.J=J;return Object.assign({},r,{Q})}
 function stat(X){if(X.S)return X.S;X.S={};const fr=[];for(let i=0;i<40;i++)fr.push(pose3(X,X.T*i/40).Q);
  for(const v of X.V){const cam=CAM[v],top=v=='t';let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;const B=(x,y,r=0)=>{x0=Math.min(x0,x-r);x1=Math.max(x1,x+r);y0=Math.min(y0,y-r);y1=Math.max(y1,y+r)};
   for(const Q of fr)for(const n in Q.p){const q=cam.p(Q.p[n]);B(q[0],q[1],n=='hd'?K.hr+1:9)}
@@ -346,6 +348,18 @@ Object.assign(AN.A,{
  k:[{a:[172,-182]},{a:[160,-30]}],
  p:[[2,'⬇️ Descente · 2 s','Coudes pointés vers le plafond, altère derrière la tête',.55],[1,'⬆️ Extension · 1 s','Tends les bras sans écarter les coudes',1]],
  w:'Ne cambre pas : gaine les abdos, coudes serrés.'},
+'Extension couchée':{z:{e:12,w:11,h:11},v:'s',pr:[{c:'bed',x0:-110,x1:55,h:48,p:'l'}],m:['tri'],db:{h:'aA',w:1},tr:'ah',
+ b:{x:5,y:-57,t:-90,l:{x:40,y:-52,s:1}},k:[{a:[100,100]},{a:[106,212]}],
+ p:[[2,'⬇️ Descente · 2 s','Seuls les avant-bras bougent : altères de chaque côté de la tête',.55],[1,'⬆️ Extension · 1 s','Tends les bras, coudes pointés vers le plafond',1]],
+ w:'Les coudes ne s\'écartent pas et ne bougent pas : bras légèrement inclinés vers la tête.'},
+'Extension un bras':{z:{ae:8,aw:2,ah:1},v:'s',m:['tri'],db:{h:'a',o:'a',w:1},tr:'ah',
+ b:{A:[-4,4]},k:[{a:[174,-184]},{a:[164,-28]}],
+ p:[[2,'⬇️ Descente · 2 s','Coude pointé vers le plafond, l\'altère passe derrière la tête',.55],[1,'⬆️ Extension · 1 s','Tends le bras sans bouger le coude',1]],
+ w:'Ne cambre pas : abdos serrés. Le coude reste près de la tête.'},
+'Développé serré au sol':{z:{w:6,h:5},v:'s',pr:[{c:'mat',x0:-95,x1:65}],m:['tri'],m2:['pec'],db:{h:'aA',w:1},tr:'ah',
+ b:{x:3,y:-10,t:-90,l:{x:40,y:-5,s:1}},k:[{a:[90,90,1,1]},{a:[2,90,.85,1]},{a:[2,90,.85,1]}],
+ p:[[2,'⬇️ Descente · 2 s','Paumes face à face, coudes collés au corps jusqu\'au sol',.55],[.6,'⏸ Coudes au sol','Pause sans rebond',.7],[1,'⬆️ Poussée · 1 s','Pousse en gardant les coudes serrés',1]],
+ w:'Si les coudes s\'écartent, ce sont les pectoraux qui travaillent, plus les triceps.'},
 'Kickback':{z:{Aw:-11,Ah:-11},v:'s',an:'la',m:['tri'],db:{h:'a',w:1},tr:'ah',
  b:{x:5,y:-4,t:105,l:[95,70],A:[60,95]},k:[{a:[0,75]},{a:[0,0]}],
  p:[[1,'➡️ Extension · 1 s','Tends le bras vers l\'arrière, coude fixe',1],[2,'⬅️ Retour · 2 s','Ramène l\'avant-bras à la verticale',.55]],
@@ -501,6 +515,7 @@ Object.assign(AN.A,{
 
 </script>
 <script>
+if(typeof AN=='undefined')window.AN={A:{},has:()=>false,scan(){},mount(){},stop(){}};
 const ls={g(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},s(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 const $=s=>document.querySelector(s);
 const M={epaules:'Épaules',pecs:'Pectoraux',biceps:'Biceps',triceps:'Triceps',abdos:'Abdos',dos:'Dos / trapèzes',lombaires:'Lombaires',fessiers:'Fessiers',cuisses:'Cuisses',ischios:'Ischios',mollets:'Mollets'};
@@ -526,6 +541,9 @@ biceps|Curl araignée|À plat ventre sur le lit, poitrine au bord, bras pendants
 triceps|Dips sur chaise|Mains sur l'assise, fesses devant, descends les coudes à 90° puis pousse.|dips chaise
 triceps|Extension nuque|Une altère à deux mains derrière la tête, tends les bras vers le plafond.|extension triceps haltère nuque
 triceps|Kickback|Buste penché, coude collé, tends le bras vers l'arrière avec l'altère.|kickback triceps haltère
+triceps|Extension couchée|Dos sur le lit, une altère dans chaque main bras tendus, plie les coudes pour amener les altères de chaque côté de la tête.|extension triceps couché haltères skull crusher
+triceps|Extension un bras|Debout, une altère au-dessus de la tête, coude vers le plafond : descends derrière la tête puis tends le bras. Change de bras.|extension triceps un bras haltère
+triceps|Développé serré au sol|Allongé sur le tapis, paumes face à face, coudes collés au corps : descends jusqu'au sol puis pousse.|développé serré au sol haltères triceps
 abdos|Crunch|Sur le tapis, genoux fléchis, enroule le buste sans tirer sur la nuque.|crunch abdos
 abdos|Planche|Sur les avant-bras, corps aligné, ventre et fessiers serrés. Tiens la position.|planche gainage
 abdos|Relevé de jambes|Sur le tapis, monte les jambes tendues puis redescends sans toucher le sol.|relevé de jambes abdos
@@ -587,7 +605,7 @@ $('#md').onclick=ev=>{const b=ev.target.closest('button');if(!b)return;mode=b.da
 const url=x=>links[x.n]||'https://www.youtube.com/results?search_query='+encodeURIComponent(x.q+' exercice');
 // Ordre optimal : polyarticulaires des gros muscles d'abord (on est frais), puis isolation, petits muscles,
 // et enfin bas du dos et gainage, qui stabilisent tous les autres exercices et ne doivent pas être fatigués avant.
-const PO=new Set(['Développé couché altères','Développé au sol','Développé serré','Développé en pont','Développé épaules','Développé Arnold','Dips sur chaise','Rowing un bras','Rowing penché','Fentes arrière','Squat sur chaise','Squat gobelet','Squat bulgare','Soulevé de terre roumain','Soulevé une jambe','Good morning']),
+const PO=new Set(['Développé couché altères','Développé au sol','Développé serré','Développé en pont','Développé épaules','Développé Arnold','Dips sur chaise','Développé serré au sol','Rowing un bras','Rowing penché','Fentes arrière','Squat sur chaise','Squat gobelet','Squat bulgare','Soulevé de terre roumain','Soulevé une jambe','Good morning']),
 MO=['cuisses','fessiers','ischios','dos','pecs','epaules','triceps','biceps','mollets','lombaires','abdos'],
 TI=['💥 Polyarticulaires — gros muscles, tant que tu es frais','🎯 Isolation — termine les gros muscles','💪 Petits muscles — bras et mollets','🧱 Bas du dos','🔥 Gainage — toujours en dernier'],
 tier=x=>x.m=='abdos'?4:x.m=='lombaires'?3:['biceps','triceps','mollets'].includes(x.m)?2:PO.has(x.n)?0:1,
@@ -609,14 +627,14 @@ else if(ci){h+=`<h3>🔁 Circuit — enchaîne dans cet ordre, puis recommence</
 else{let tp=-1;h+=`<p class="sub">Ordre optimisé : gros muscles avant petits, polyarticulaires avant isolation, gainage à la fin.</p>`;
 order(cur).forEach(x=>{if(tier(x)!=tp){tp=tier(x);h+=`<h3>${TI[tp]}</h3>`}list.push(x);h+=card(x,l,t,list.length)})}
 // retour au calme : étirements des muscles travaillés (muscle de l'exercice + muscles principaux de son animation)
-const wm=new Set();cur.forEach(x=>{if(M[x.m])wm.add(x.m);for(const k of AN.A[x.n]?.m||[])if(AM[k])wm.add(AM[k])});
+const wm=new Set();cur.forEach(x=>{if(M[x.m])wm.add(x.m);for(const k of (AN.A[x.n]||{}).m||[])if(AM[k])wm.add(AM[k])});
 stl=MO.filter(m=>wm.has(m)).flatMap(m=>D.filter(x=>x.m=='st:'+m));const sd=stl.flatMap(hold).reduce((a,x)=>a+x.d,0);
 if(stl.length)h+=`<h3>🧘 Retour au calme — étirements</h3><p class="sub">Muscles travaillés : ${MO.filter(m=>wm.has(m)).map(m=>M[m]).join(', ')}. 30 s par étirement, muscles chauds, sans à-coups.</p><button class="p" data-stg>▶ Lancer les étirements · ${stl.length} · ≈ ${Math.ceil(sd/60)} min</button>`+stl.map(scard).join('');
 $('#list').innerHTML=h;AN.scan($('#list'));const n=list.length;$('#inf').textContent=ci?`Circuit brûle-graisse · ${n} exos × ${l.cr} tours · ≈ ${Math.round(((60*n-20)*l.cr+90*(l.cr-1))/60)} min`:t?`Tabata · ${n} exercices`:`${l.s} séries × ${l.r} reps · repos ${l.rest} s`}
 // remplace un exercice par le suivant du même muscle (ou du circuit vélo) qui n'est pas déjà dans la séance
 function swap(n){const x=cur.find(y=>y.n==n);if(!x)return;const pool=kind=='velo'?[...new Set([...V.map(v=>D.find(y=>y.n==v)),...D.filter(y=>y.m==x.m)])]:D.filter(y=>y.m==x.m),i=pool.indexOf(x),
 nx=[...pool.slice(i+1),...pool.slice(0,i)].find(y=>!cur.includes(y));if(!nx){alert('Pas d\'autre exercice disponible pour ce muscle.');return}
-cur[cur.indexOf(x)]=nx;show();const c=$('#list').querySelector(`[data-sw="${CSS.escape(nx.n)}"]`)?.closest('.c');if(c){c.scrollIntoView({block:'center'});c.classList.add('fl')}}
+cur[cur.indexOf(x)]=nx;show();const e=$('#list').querySelector(`[data-sw="${CSS.escape(nx.n)}"]`),c=e&&e.closest('.c');if(c){c.scrollIntoView({block:'center'});c.classList.add('fl')}}
 function gen(){if(!lvl){alert('Choisis un niveau');return}
 const l=L[lvl],t=mode=='tab';cfg={w:+$('#tw').value||20,r:+$('#tr').value||0,n:+$('#tn2').value||1,p:+$('#tp2').value||0};
 cur=kind=='velo'?V.slice(0,[0,7,9,11][lvl]).map(n=>D.find(y=>y.n==n)):[...sel].flatMap(m=>{const E=D.filter(x=>x.m==m),ne=mode=='circ'?Math.max(1,Math.min(l.ex,Math.floor(10/sel.size))):l.ex;return E.slice(0,Math.min(ne,E.length)).map((_,i)=>E[(ro*ne+i)%E.length])});
