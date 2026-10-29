@@ -66,6 +66,7 @@ summary{font-weight:600}li{margin:5px 0;font-size:14px}
 <h1 id="ttl">Séance</h1>
 <p class="sub" id="inf"></p>
 <button class="p" id="tab" hidden>▶ Lancer le tabata</button>
+<button id="rot" style="width:100%;margin-top:8px" hidden>🔀 Autres exercices</button>
 <div id="list"></div>
 <details open id="dt"><summary>📈 Progression des charges</summary><ul id="adv"></ul></details>
 <button id="b2" style="width:100%">← Changer niveau / mode</button>
@@ -173,8 +174,9 @@ function prop(q){switch(q.c){
  case'chairf':{const x=q.x,w=q.w||46;return RC(x+2,-97,w-4,34,'pr2',4)+RC(x+3,-62,3,20,'pr2')+RC(x+w-6,-62,3,20,'pr2')+RC(x,-46,w,6,'pr')+RC(x+1,-41,4,41,'pr2')+RC(x+w-5,-41,4,41,'pr2')}
  case'bed':{const h=q.h||48;return RC(q.x0+2,-h+14,q.x1-q.x0-4,8,'pr2')+RC(q.x0+3,-h+20,5,h-20,'pr2')+RC(q.x1-8,-h+20,5,h-20,'pr2')+RC(q.x0,-h,q.x1-q.x0,15,'pr',5)+(q.p?RC(q.p=='l'?q.x0+4:q.x1-34,-h-6,30,7,'pr2',3.5):'')}
  case'bedt':return RC(q.x0,q.y0,q.x1-q.x0,q.y1-q.y0,'pr',6)+RC(q.x0+5,q.y0+8,22,q.y1-q.y0-16,'pr2',5);
+ case'matt':return RC(q.x0,q.y0,q.x1-q.x0,q.y1-q.y0,'mat',4);
  case'wall':{const x=q.s=='l'?q.x-9:q.x;let s=RC(x,-215,9,215,'pr',0);for(let y=-205;y<0;y+=14)s+=L([x+(q.s=='l'?0:9),y],[x+(q.s=='l'?6:3),y+6],1,'pr3');return s}}return''}
-function pbox(q){switch(q.c){case'mat':return[q.x0,-3,q.x1,0];case'chair':return[q.x,-92,q.x+40,0];case'chairf':return[q.x,-97,q.x+(q.w||46),0];case'bed':return[q.x0,-(q.h||48)-6,q.x1,0];case'bedt':return[q.x0,q.y0,q.x1,q.y1];case'wall':return[q.s=='l'?q.x-6:q.x,-120,q.s=='l'?q.x:q.x+6,0]}return[0,0,0,0]}
+function pbox(q){switch(q.c){case'mat':return[q.x0,-3,q.x1,0];case'chair':return[q.x,-92,q.x+40,0];case'chairf':return[q.x,-97,q.x+(q.w||46),0];case'bed':return[q.x0,-(q.h||48)-6,q.x1,0];case'bedt':case'matt':return[q.x0,q.y0,q.x1,q.y1];case'wall':return[q.s=='l'?q.x-6:q.x,-120,q.s=='l'?q.x:q.x+6,0]}return[0,0,0,0]}
 // ---------- cadrage, trajectoire, fantômes (calculés une fois par exercice) ----------
 function stat(X){if(X.S)return X.S;let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;const B=(x,y,r=0)=>{x0=Math.min(x0,x-r);x1=Math.max(x1,x+r);y0=Math.min(y0,y-r);y1=Math.max(y1,y+r)};
  for(let i=0;i<40;i++){const J=solve(at(X,X.T*i/40).P,X);for(const k in J)if(Array.isArray(J[k]))B(J[k][0],J[k][1],k=='hd'?K.hr+1:9)}
@@ -214,6 +216,30 @@ return{A,mount,stop,scan,has:n=>!!A[n],prep,at,solve,fig,stat}})();
 (()=>{const st=(c1,c2,c3)=>[[1.6,'➡️ Mise en tension',c1,.6],[4,'⏸ Tiens · respire',c2,1],[1.6,'⬅️ Relâche',c3,.2]];
 const toe=(x,f)=>({x:x-13*Math.sin(f*Math.PI/180),y:-.5-13*Math.cos(f*Math.PI/180),s:1});
 Object.assign(AN.A,{
+'Développé au sol':{v:'s',pr:[{c:'mat',x0:-95,x1:65}],m:['pec','tri'],m2:['delt'],db:{h:'aA',w:0},tr:'ah',
+ b:{x:3,y:-10,t:-90,l:{x:40,y:-5,s:1}},k:[{a:[90,90,1,1]},{a:[10,90,.5,1]},{a:[10,90,.5,1]}],
+ p:[[2,'⬇️ Descente · 2 s','Coudes à ~45° du buste jusqu\'à toucher le sol',.55],[.8,'⏸ Pause coudes au sol','Relâche une seconde sans rebondir',.7],[1,'⬆️ Poussée · 1 s','Pousse vers le plafond, épaules plaquées au sol',1]],
+ w:'Ne fais pas rebondir les coudes sur le sol.'},
+'Développé serré':{v:'s',pr:[{c:'bed',x0:-110,x1:55,h:48,p:'l'}],m:['pec','tri'],m2:['delt'],db:{h:'aA',w:1},tr:'ah',
+ b:{x:5,y:-57,t:-90,l:{x:40,y:-52,s:1}},k:[{a:[90,90,1,1]},{a:[2,90,.85,1]}],
+ p:[[2,'⬇️ Descente · 2 s','Altères collées, paumes face à face, coudes près du corps',.55],[1,'⬆️ Poussée · 1 s','Pousse en serrant fort les altères l\'une contre l\'autre',1]],
+ w:'Les altères ne doivent pas se séparer pendant la poussée.'},
+'Pullover altère':{v:'s',pr:[{c:'bed',x0:-110,x1:55,h:48,p:'l'}],m:['pec','dos'],m2:['tri'],db:{h:'c',o:'a',w:1},tr:'ah',
+ b:{x:5,y:-57,t:-90,l:{x:40,y:-52,s:1}},k:[{a:[90,96]},{a:[166,176]}],
+ p:[[2.2,'⬅️ Descente · 2 s','Bras presque tendus, l\'altère passe derrière la tête',.6],[1.4,'➡️ Retour · 1,5 s','Ramène au-dessus de la poitrine en serrant les pectoraux',1]],
+ w:'Ne cambre pas : bas du dos collé, descends seulement si l\'épaule est à l\'aise.'},
+'Écartés au sol':{v:'f',nf:1,pr:[{c:'matt',x0:-120,x1:105,y0:-40,y1:40}],m:['pec'],m2:['delt','bic'],db:{h:'aA',w:1},tr:'ah',
+ b:{x:10,y:0,t:-90,l:[4,4]},k:[{a:[100,80,.14,.14],ds:1.45},{a:[96,112,.9,.9],ds:1},{a:[96,112,.9,.9],ds:1}],
+ p:[[2,'↔️ Ouverture · 2 s','Ouvre en arc jusqu\'à poser les coudes au sol',.6],[.6,'⏸ Coudes posés','Ne relâche pas complètement',.7],[1.4,'⤴️ Fermeture · 1,5 s','Ramène au-dessus de la poitrine',1]],
+ w:'Garde les coudes fléchis, ne laisse pas tomber les bras.'},
+'Développé en pont':{v:'s',an:'as',pr:[{c:'mat',x0:-85,x1:65}],m:['pec','tri'],m2:['glu'],db:{h:'aA',w:0},tr:'ah',
+ b:{x:-45,y:-10,t:-68,n:-22,l:{x:42,y:-5,s:1}},k:[{a:[68,68,1,1]},{a:[-12,68,.5,1]}],
+ p:[[2,'⬇️ Descente · 2 s','Bassin haut et fessiers serrés pendant tout l\'exercice',.55],[1,'⬆️ Poussée · 1 s','Pousse vers le plafond : cible le bas des pectoraux',1]],
+ w:'Ne laisse pas le bassin redescendre pendant les répétitions.'},
+'Svend press altère':{v:'s',m:['pec'],m2:['delt'],db:{h:'c',o:'t',w:1},tr:'ah',
+ k:[{a:{x:14,y:-128,s:-1}},{a:{x:52,y:-127,s:-1}},{a:{x:52,y:-127,s:-1}}],
+ p:[[1.2,'➡️ Poussée · 1 s','Serre l\'altère entre les paumes et pousse devant toi',1],[.8,'⏸ Serre 1 s','Écrase l\'altère, pectoraux contractés',1],[1.8,'⬅️ Retour · 2 s','Ramène contre la poitrine sans relâcher la pression',.6]],
+ w:'Ne hausse pas les épaules : la force vient de la pression des paumes.'},
 'Pompes':{v:'s',an:'la',pr:[{c:'mat',x0:-105,x1:70}],m:['pec','tri'],m2:['delt','abs'],tr:'as',
  b:{x:-90,y:-12,t:110,l:[0,0],f:15,a:{x:40,y:-6,s:-1}},k:[{},{t:93}],
  p:[[2,'⬇️ Descente · 2 s','Coudes à ~45° du buste, corps gainé en planche',.55],[1,'⬆️ Poussée · 1 s','Expire et pousse le sol, bassin aligné',1]],
@@ -416,9 +442,15 @@ Object.assign(AN.A,{
 const ls={g(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},s(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 const $=s=>document.querySelector(s);
 const M={epaules:'Épaules',pecs:'Pectoraux',biceps:'Biceps',triceps:'Triceps',abdos:'Abdos',dos:'Dos / trapèzes',lombaires:'Lombaires',fessiers:'Fessiers',cuisses:'Cuisses',ischios:'Ischios',mollets:'Mollets'};
-const D=`pecs|Pompes|Mains sous les épaules, corps gainé, poitrine vers le sol puis pousse. Genoux au sol si trop dur.|pompes
-pecs|Développé couché altères|Dos sur le lit, altères au-dessus de la poitrine, descends aux pectoraux puis pousse.|développé couché haltères
+const D=`pecs|Développé couché altères|Dos sur le lit, altères au-dessus de la poitrine, descends aux pectoraux puis pousse.|développé couché haltères
 pecs|Écartés altères|Allongé sur le lit, bras légèrement fléchis, ouvre en arc puis ramène.|écartés haltères
+pecs|Développé au sol|Allongé sur le tapis, genoux fléchis, descends jusqu'à poser les coudes au sol, pause, puis pousse.|floor press haltères
+pecs|Développé serré|Dos sur le lit, altères collées paumes face à face, pousse en les serrant l'une contre l'autre.|squeeze press haltères
+pecs|Pullover altère|Dos sur le lit, une altère à deux mains au-dessus de la poitrine, descends derrière la tête bras presque tendus.|pullover haltère
+pecs|Écartés au sol|Allongé sur le tapis, bras légèrement fléchis, ouvre jusqu'à poser les coudes au sol puis ramène.|écartés au sol haltères
+pecs|Développé en pont|En pont fessier (bassin haut), développé des altères : cible le bas des pectoraux.|développé décliné pont fessier haltères
+pecs|Svend press altère|Debout, une altère serrée entre les paumes contre la poitrine, pousse devant toi en serrant.|svend press haltère
+pecs|Pompes|Mains sous les épaules, corps gainé, poitrine vers le sol puis pousse. Genoux au sol si trop dur.|pompes
 epaules|Développé épaules|Assis sur la chaise, dos droit, pousse les altères au-dessus de la tête.|développé épaules haltères assis
 epaules|Élévations latérales|Debout, bras fléchis, monte les altères sur les côtés jusqu'à hauteur d'épaules.|élévations latérales haltères
 epaules|Pompes pike|Hanches hautes en V, tête vers le sol puis repousse. Pieds sur la chaise pour durcir.|pompes pike
@@ -490,14 +522,14 @@ const url=x=>links[x.n]||'https://www.youtube.com/results?search_query='+encodeU
 function card(x,l,t){const w=/alt[eè]re/i.test(x.n+x.d),k=ls.g('kg:'+x.n,'');
 return `<div class="c"><b>${x.n}</b><div class="rp">${t?`Tabata ${cfg.w} s / ${cfg.r} s × ${cfg.n}`:/^(Planche|Squat isom)/.test(x.n)?`${l.s} × ${l.p} s`:`${l.s} × ${l.r} reps`}</div><p>${x.d}</p>${w?`<label>Charge par altère (kg)<input type="number" step="0.5" inputmode="decimal" data-k="${x.n}" value="${k}"></label>`:''}${AN.has(x.n)?`<div class="anw" data-an="${x.n}"></div>`:''}<div class="bt"><a href="${url(x)}" target="_blank" rel="noopener">▶ Vidéo</a><button data-tg>🎬 Animation</button><button data-e="${x.n}">✎ Lien</button>${t?'':'<button data-rest="1">⏱ Repos</button>'}</div></div>`}
 let list=[];
-$('#ok').onclick=()=>kind=='st'?gst():go(2);$('#go').onclick=gen;
+$('#ok').onclick=()=>kind=='st'?gst():go(2);$('#go').onclick=()=>{ro=0;gen()};$('#rot').onclick=()=>{ro++;gen()};let ro=0;
 function scard(x){return `<div class="c"><b>${x.n}</b><div class="rp">${side(x)?'30 s × 2 côtés':'30 s'}</div><p>${x.d}</p>${AN.has(x.n)?`<div class="anw" data-an="${x.n}"></div>`:''}<div class="bt"><a href="${url(x)}" target="_blank" rel="noopener">▶ Vidéo</a><button data-tg>🎬 Animation</button><button data-e="${x.n}">✎ Lien</button><button data-h="${x.n}">⏱ Timer</button></div></div>`}
-function gst(){let h='';list=[];sel.forEach(m=>{h+=`<h3>${M[m]}</h3>`;D.filter(x=>x.m=='st:'+m).forEach(x=>{list.push(x);h+=scard(x)})});$('#list').innerHTML=h;AN.scan($('#list'));$('#ttl').textContent='🧘 Étirements';$('#inf').textContent=list.length+' étirements · 30 s · muscles chauds, sans douleur, sans rebond';$('#tab').textContent='▶ Lancer les étirements';$('#tab').hidden=false;$('#dt').hidden=true;go(3)}
+function gst(){let h='';list=[];sel.forEach(m=>{h+=`<h3>${M[m]}</h3>`;D.filter(x=>x.m=='st:'+m).forEach(x=>{list.push(x);h+=scard(x)})});$('#list').innerHTML=h;AN.scan($('#list'));$('#ttl').textContent='🧘 Étirements';$('#inf').textContent=list.length+' étirements · 30 s · muscles chauds, sans douleur, sans rebond';$('#tab').textContent='▶ Lancer les étirements';$('#tab').hidden=false;$('#rot').hidden=true;$('#dt').hidden=true;go(3)}
 function gen(){if(!lvl){alert('Choisis un niveau');return}
 const l=L[lvl],t=mode=='tab';cfg={w:+$('#tw').value||20,r:+$('#tr').value||0,n:+$('#tn2').value||1,p:+$('#tp2').value||0};
-let h='';list=[];(kind=='velo'?V.slice(0,[0,7,9,11][lvl]).map(n=>D.find(y=>y.n==n)):[]).forEach(x=>{list.push(x);h+=card(x,l,t)});if(kind!='velo')sel.forEach(m=>{h+=`<h3>${M[m]}</h3>`;D.filter(x=>x.m==m).slice(0,l.ex).forEach(x=>{list.push(x);h+=card(x,l,t)})});
+let h='';list=[];(kind=='velo'?V.slice(0,[0,7,9,11][lvl]).map(n=>D.find(y=>y.n==n)):[]).forEach(x=>{list.push(x);h+=card(x,l,t)});if(kind!='velo')sel.forEach(m=>{h+=`<h3>${M[m]}</h3>`;(m=>{const E=D.filter(x=>x.m==m);return E.slice(0,Math.min(l.ex,E.length)).map((_,i)=>E[(ro*l.ex+i)%E.length])})(m).forEach(x=>{list.push(x);h+=card(x,l,t)})});
 $('#list').innerHTML=h;AN.scan($('#list'));$('#ttl').textContent=(kind=='velo'?'🚴 Vélo · ':'')+l.n;$('#inf').textContent=t?`Tabata · ${list.length} exercices`:`${l.s} séries × ${l.r} reps · repos ${l.rest} s`;
-$('#tab').hidden=!t;$('#tab').textContent='▶ Lancer le tabata';$('#dt').hidden=false;
+$('#tab').hidden=!t;$('#rot').hidden=kind=='velo';$('#tab').textContent='▶ Lancer le tabata';$('#dt').hidden=false;
 $('#adv').innerHTML=`<li><b>Charge de départ</b> (indicatif, par altère) : haut du corps ${l.h}, bas du corps ${l.b}.</li><li>Choisis une charge qui rend les 2 dernières reps difficiles mais propres.</li><li><b>Double progression</b> : quand tu atteins le haut de la fourchette (${l.r.split('–')[1]} reps) sur toutes les séries, ajoute 1–2 kg (haut du corps) ou 2–4 kg (bas du corps), puis repars du bas de la fourchette.</li><li>Technique qui se dégrade : ne monte pas.</li><li>Altères trop légères et plus de cran possible : descente en 3 s, pause en bas, ou version à un bras / une jambe.</li><li>Une seule variable à la fois : charge OU reps OU séries.</li><li>48 h entre deux séances du même muscle. Toutes les 6–8 semaines : semaine allégée (−20 % de charge).</li>`;
 go(3)}
 $('#list').addEventListener('input',ev=>{const k=ev.target.dataset.k;if(k)ls.s('kg:'+k,ev.target.value)});
