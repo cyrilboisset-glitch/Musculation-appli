@@ -27,7 +27,7 @@ button:disabled{opacity:.4}
 label{display:block;font-size:14px;color:var(--mut)}
 input{font:inherit;width:100%;padding:8px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--fg)}
 .c{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px;margin:8px 0}
-.c p{margin:4px 0 8px;font-size:14px}.tg{font-size:12px;color:var(--mut);border:1px solid var(--bd);border-radius:99px;padding:1px 8px;vertical-align:2px}.rp{color:var(--ac);font-weight:600}
+.c p{margin:4px 0 8px;font-size:14px}.sw{width:100%;margin-top:8px;font-size:14px;padding:8px}.c.fl{animation:fl 1.4s ease-out}@keyframes fl{from{box-shadow:0 0 0 3px var(--ac)}to{box-shadow:0 0 0 0 transparent}}.tg{font-size:12px;color:var(--mut);border:1px solid var(--bd);border-radius:99px;padding:1px 8px;vertical-align:2px}.rp{color:var(--ac);font-weight:600}
 .bt{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.bt a,.bt button{padding:7px 12px;font-size:14px}
 details{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:10px 12px;margin:14px 0}
 summary{font-weight:600}li{margin:5px 0;font-size:14px}
@@ -571,21 +571,32 @@ TI=['💥 Polyarticulaires — gros muscles, tant que tu es frais','🎯 Isolati
 tier=x=>x.m=='abdos'?4:x.m=='lombaires'?3:['biceps','triceps','mollets'].includes(x.m)?2:PO.has(x.n)?0:1,
 order=a=>a.map((x,i)=>[x,i]).sort(([x,i],[y,j])=>tier(x)-tier(y)||MO.indexOf(x.m)-MO.indexOf(y.m)||PO.has(y.n)-PO.has(x.n)||/^Planche/.test(x.n)-/^Planche/.test(y.n)||i-j).map(([x])=>x);
 function card(x,l,t,i){const w=/alt[eè]re/i.test(x.n+x.d),k=ls.g('kg:'+x.n,'');
-return `<div class="c"><b>${i?i+'. ':''}${x.n}</b>${i?` <span class="tg">${M[x.m]}</span>`:''}<div class="rp">${t?`Tabata ${cfg.w} s / ${cfg.r} s × ${cfg.n}`:/^(Planche|Squat isom)/.test(x.n)?`${l.s} × ${l.p} s`:`${l.s} × ${l.r} reps`}</div><p>${x.d}</p>${w?`<label>Charge par altère (kg)<input type="number" step="0.5" inputmode="decimal" data-k="${x.n}" value="${k}"></label>`:''}${AN.has(x.n)?`<div class="anw" data-an="${x.n}"></div>`:''}<div class="bt"><a href="${url(x)}" target="_blank" rel="noopener">▶ Vidéo</a><button data-tg>🎬 Animation</button><button data-e="${x.n}">✎ Lien</button>${t?'':'<button data-rest="1">⏱ Repos</button>'}</div></div>`}
+return `<div class="c"><b>${i?i+'. ':''}${x.n}</b>${i?` <span class="tg">${M[x.m]||'🚴 Vélo'}</span>`:''}<div class="rp">${t?`Tabata ${cfg.w} s / ${cfg.r} s × ${cfg.n}`:/^(Planche|Squat isom)/.test(x.n)?`${l.s} × ${l.p} s`:`${l.s} × ${l.r} reps`}</div><p>${x.d}</p>${w?`<label>Charge par altère (kg)<input type="number" step="0.5" inputmode="decimal" data-k="${x.n}" value="${k}"></label>`:''}${AN.has(x.n)?`<div class="anw" data-an="${x.n}"></div>`:''}<div class="bt"><a href="${url(x)}" target="_blank" rel="noopener">▶ Vidéo</a><button data-tg>🎬 Animation</button><button data-e="${x.n}">✎ Lien</button>${t?'':'<button data-rest="1">⏱ Repos</button>'}</div><button class="sw" data-sw="${x.n}">🔄 Changer d'exercice</button></div>`}
 let list=[];
 $('#ok').onclick=()=>kind=='st'?gst():go(2);$('#go').onclick=()=>{ro=0;gen()};$('#rot').onclick=()=>{ro++;gen()};let ro=0;
 function scard(x){return `<div class="c"><b>${x.n}</b><div class="rp">${side(x)?'30 s × 2 côtés':'30 s'}</div><p>${x.d}</p>${AN.has(x.n)?`<div class="anw" data-an="${x.n}"></div>`:''}<div class="bt"><a href="${url(x)}" target="_blank" rel="noopener">▶ Vidéo</a><button data-tg>🎬 Animation</button><button data-e="${x.n}">✎ Lien</button><button data-h="${x.n}">⏱ Timer</button></div></div>`}
 function gst(){let h='';list=[];sel.forEach(m=>{h+=`<h3>${M[m]}</h3>`;D.filter(x=>x.m=='st:'+m).forEach(x=>{list.push(x);h+=scard(x)})});$('#list').innerHTML=h;AN.scan($('#list'));$('#ttl').textContent='🧘 Étirements';$('#inf').textContent=list.length+' étirements · 30 s · muscles chauds, sans douleur, sans rebond';$('#tab').textContent='▶ Lancer les étirements';$('#tab').hidden=false;$('#rot').hidden=true;$('#dt').hidden=true;go(3)}
+let cur=[];
+// affiche la séance en cours (cur) : ordre optimal sauf en vélo, où l'ordre du circuit est gardé
+function show(){const l=L[lvl],t=mode=='tab';let h='';list=[];
+if(kind=='velo')cur.forEach(x=>{list.push(x);h+=card(x,l,t,list.length)});
+else{let tp=-1;h+=`<p class="sub">Ordre optimisé : gros muscles avant petits, polyarticulaires avant isolation, gainage à la fin.</p>`;
+order(cur).forEach(x=>{if(tier(x)!=tp){tp=tier(x);h+=`<h3>${TI[tp]}</h3>`}list.push(x);h+=card(x,l,t,list.length)})}
+$('#list').innerHTML=h;AN.scan($('#list'));$('#inf').textContent=t?`Tabata · ${list.length} exercices`:`${l.s} séries × ${l.r} reps · repos ${l.rest} s`}
+// remplace un exercice par le suivant du même muscle (ou du circuit vélo) qui n'est pas déjà dans la séance
+function swap(n){const x=cur.find(y=>y.n==n);if(!x)return;const pool=kind=='velo'?[...new Set([...V.map(v=>D.find(y=>y.n==v)),...D.filter(y=>y.m==x.m)])]:D.filter(y=>y.m==x.m),i=pool.indexOf(x),
+nx=[...pool.slice(i+1),...pool.slice(0,i)].find(y=>!cur.includes(y));if(!nx){alert('Pas d\'autre exercice disponible pour ce muscle.');return}
+cur[cur.indexOf(x)]=nx;show();const c=$('#list').querySelector(`[data-sw="${CSS.escape(nx.n)}"]`)?.closest('.c');if(c){c.scrollIntoView({block:'center'});c.classList.add('fl')}}
 function gen(){if(!lvl){alert('Choisis un niveau');return}
 const l=L[lvl],t=mode=='tab';cfg={w:+$('#tw').value||20,r:+$('#tr').value||0,n:+$('#tn2').value||1,p:+$('#tp2').value||0};
-let h='';list=[];(kind=='velo'?V.slice(0,[0,7,9,11][lvl]).map(n=>D.find(y=>y.n==n)):[]).forEach(x=>{list.push(x);h+=card(x,l,t)});if(kind!='velo'){let tp=-1;h+=`<p class="sub">Ordre optimisé : gros muscles avant petits, polyarticulaires avant isolation, gainage à la fin.</p>`;
-order([...sel].flatMap(m=>{const E=D.filter(x=>x.m==m);return E.slice(0,Math.min(l.ex,E.length)).map((_,i)=>E[(ro*l.ex+i)%E.length])})).forEach(x=>{if(tier(x)!=tp){tp=tier(x);h+=`<h3>${TI[tp]}</h3>`}list.push(x);h+=card(x,l,t,list.length)})}
-$('#list').innerHTML=h;AN.scan($('#list'));$('#ttl').textContent=(kind=='velo'?'🚴 Vélo · ':'')+l.n;$('#inf').textContent=t?`Tabata · ${list.length} exercices`:`${l.s} séries × ${l.r} reps · repos ${l.rest} s`;
+cur=kind=='velo'?V.slice(0,[0,7,9,11][lvl]).map(n=>D.find(y=>y.n==n)):[...sel].flatMap(m=>{const E=D.filter(x=>x.m==m);return E.slice(0,Math.min(l.ex,E.length)).map((_,i)=>E[(ro*l.ex+i)%E.length])});
+show();$('#ttl').textContent=(kind=='velo'?'🚴 Vélo · ':'')+l.n;
 $('#tab').hidden=!t;$('#rot').hidden=kind=='velo';$('#tab').textContent='▶ Lancer le tabata';$('#dt').hidden=false;
 $('#adv').innerHTML=`<li><b>Charge de départ</b> (indicatif, par altère) : haut du corps ${l.h}, bas du corps ${l.b}.</li><li>Choisis une charge qui rend les 2 dernières reps difficiles mais propres.</li><li><b>Double progression</b> : quand tu atteins le haut de la fourchette (${l.r.split('–')[1]} reps) sur toutes les séries, ajoute 1–2 kg (haut du corps) ou 2–4 kg (bas du corps), puis repars du bas de la fourchette.</li><li>Technique qui se dégrade : ne monte pas.</li><li>Altères trop légères et plus de cran possible : descente en 3 s, pause en bas, ou version à un bras / une jambe.</li><li>Une seule variable à la fois : charge OU reps OU séries.</li><li>48 h entre deux séances du même muscle. Toutes les 6–8 semaines : semaine allégée (−20 % de charge).</li>`;
 go(3)}
 $('#list').addEventListener('input',ev=>{const k=ev.target.dataset.k;if(k)ls.s('kg:'+k,ev.target.value)});
 $('#list').addEventListener('click',ev=>{const b=ev.target.closest('button');if(!b)return;
+if(b.dataset.sw!=null){swap(b.dataset.sw);return}
 if(b.dataset.tg!=null){const w=b.closest('.c').querySelector('.anw');if(w)w.hidden=!w.hidden;return}
 if(b.dataset.e){const x=D.find(y=>y.n==b.dataset.e),v=prompt('Lien YouTube pour « '+x.n+' » (vide = lien par défaut) :',links[x.n]||'');if(v===null)return;v.trim()?links[x.n]=v.trim():delete links[x.n];ls.s('links',links);
 b.closest('.c').querySelector('a').href=url(x)}
