@@ -27,7 +27,7 @@ button:disabled{opacity:.4}
 label{display:block;font-size:14px;color:var(--mut)}
 input{font:inherit;width:100%;padding:8px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--fg)}
 .c{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px;margin:8px 0}
-.c p{margin:4px 0 8px;font-size:14px}.sw{width:100%;margin-top:8px;font-size:14px;padding:8px}.c.fl{animation:fl 1.4s ease-out}@keyframes fl{from{box-shadow:0 0 0 3px var(--ac)}to{box-shadow:0 0 0 0 transparent}}.tg{font-size:12px;color:var(--mut);border:1px solid var(--bd);border-radius:99px;padding:1px 8px;vertical-align:2px}.rp{color:var(--ac);font-weight:600}
+.c p{margin:4px 0 8px;font-size:14px}.sw{width:100%;margin-top:8px;font-size:14px;padding:8px}.c.fl{animation:fl 1.4s ease-out}@keyframes fl{from{box-shadow:0 0 0 3px var(--ac)}to{box-shadow:0 0 0 0 transparent}}.fv{float:right;background:none;border:0;font-size:24px;line-height:1;padding:0 2px 4px 8px;color:var(--mut)}.fv.on{color:#e03131}.wp .wr{display:flex;align-items:center;gap:8px;padding:7px 0;border-top:1px solid var(--bd)}.wp .wn{flex:1;min-width:0;font-size:14px;color:var(--fg)}.wp .wn small{display:block;color:var(--mut);font-size:12px}.wp .wr input{width:74px;flex:none}.wu{color:var(--mut);font-size:13px}.wp .row button{font-size:14px;padding:9px 8px}.tg{font-size:12px;color:var(--mut);border:1px solid var(--bd);border-radius:99px;padding:1px 8px;vertical-align:2px}.rp{color:var(--ac);font-weight:600}
 .bt{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.bt a,.bt button{padding:7px 12px;font-size:14px}
 details{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:10px 12px;margin:14px 0}
 summary{font-weight:600}li{margin:5px 0;font-size:14px}
@@ -187,9 +187,10 @@ function dumb(h3,a3,s,cam){const p1=add3(h3,a3,-7.5*s),p2=add3(h3,a3,7.5*s),q=[p
  return plate(q[0],as,cam)+L(cam.p(p1),cam.p(p2),2.8*s,'dh')+plate(q[1],as,cam)}
 function bellAt(Q,P,X,k,cam,it){const B=X.db,p=Q.p;let h,a;
  if(B.h=='hip'){h=add3(p.hp,Q.nf,12);a=Q.lat}
+ else if(B.h=='ft'){h=p.la.map((v,i)=>(v+p.La[i])/2);a=Q.lat}
  else{h=B.h=='c'?p.ah.map((v,i)=>(v+p.Ah[i])/2):p[k+'h'];const fa=Q.J[(B.h=='c'?'a':k)+'f'],w=B.h=='c'?nv(B.w,1):nv(k=='A'?P.W:P.w,nv(B.w,0));
   a=B.o=='a'?Q.mv(dr(fa)):B.o=='t'?Q.u:nrm(add3(Q.ax.map(v=>v*(1-w)),Q.mv(dr(fa+90)),w))}
- it.push({d:cam.d(h)+.5,s:dumb(h,a,P.ds,cam)})}
+ it.push({d:cam.d(h)+(B.h=='ft'?40:.5),s:dumb(h,a,P.ds,cam)})}
 function fig(Q,P,X,cam,ef,g){const p=Q.p,J=Q.J,it=[],pj=n=>cam.p(p[n]),dp=n=>cam.d(p[n]),hd=dp('hp');
  const cls=k=>cam==CAM.s&&cam.d(p[k+(k=='a'||k=='A'?'s':'h')])<hd-6?'f':'n';
  for(const k of'Ll'){const c=cls(k);it.push({d:(dp(k+'h')+dp(k+'k'))/2,s:L(pj(k+'h'),pj(k+'k'),15,c)+(g?'':limbMus(Q,X,cam,'U',k,ef))},
@@ -202,7 +203,7 @@ function fig(Q,P,X,cam,ef,g){const p=Q.p,J=Q.J,it=[],pj=n=>cam.p(p[n]),dp=n=>cam
  for(const k of'Aa'){const c=cls(k);
   it.push({d:(dp(k+'s')+dp(k+'e'))/2,s:L(pj(k+'s'),pj(k+'e'),10,c)+(g?'':limbMus(Q,X,cam,'u',k,ef))},{d:(dp(k+'e')+dp(k+'w'))/2,s:L(pj(k+'e'),pj(k+'w'),8,c)+(g?'':limbMus(Q,X,cam,'f',k,ef))},{d:dp(k+'h'),s:C(pj(k+'h'),4.6,c+'f')});
   if(!g&&X.db.h&&X.db.h.includes(k)&&X.db.h!='c'&&X.db.h!='hip')bellAt(Q,P,X,k,cam,it)}
- if(!g&&(X.db.h=='c'||X.db.h=='hip'))bellAt(Q,P,X,'a',cam,it);
+ if(!g&&(X.db.h=='c'||X.db.h=='hip'||X.db.h=='ft'))bellAt(Q,P,X,'a',cam,it);
  // tête
  {const h=pj('hd');let s=L(pj('nb'),h,8,'n')+C(h,K.hr,'nf');
   if(!g){const fd=dot(Q.face,cam.v),f2=cam.p(add3(p.hd,Q.face,1)),u2=cam.p(add3(p.hd,Q.hu,1));let fx=f2[0]-h[0],fy=f2[1]-h[1],ux=u2[0]-h[0],uy=u2[1]-h[1];const ul=Math.hypot(ux,uy)||1;ux/=ul;uy/=ul;
@@ -364,6 +365,64 @@ Object.assign(AN.A,{
  b:{x:3,y:-10,t:-90,l:{x:40,y:-5,s:1}},k:[{a:[90,90,1,1]},{a:[2,90,.85,1]},{a:[2,90,.85,1]}],
  p:[[2,'⬇️ Descente · 2 s','Paumes face à face, coudes collés au corps jusqu\'au sol',.55],[.6,'⏸ Coudes au sol','Pause sans rebond',.7],[1,'⬆️ Poussée · 1 s','Pousse en gardant les coudes serrés',1]],
  w:'Si les coudes s\'écartent, ce sont les pectoraux qui travaillent, plus les triceps.'},
+'Rowing menton':{z:{ah:7,aw:7,ae:2},v:'f',m:['delt','trap'],m2:['bic'],db:{h:'aA',w:1},tr:'ah',
+ k:[{a:[6,2]},{a:[100,-63]}],
+ p:[[1,'⬆️ Tirage · 1 s','Coudes qui montent en premier, plus hauts que les poignets',1],[2,'⬇️ Descente · 2 s','Redescends le long du corps',.55]],
+ w:'Ne monte pas les coudes au-dessus des épaules si ça pince.'},
+'Développé alterné':{v:'f',m:['delt','tri'],m2:['abs'],db:{h:'aA',w:1},tr:'ah',g:[0,1],
+ b:{a:[80,180],A:[80,180]},k:[{},{a:[163,174]},{},{A:[163,174]}],
+ p:[[1,'⬆️ Un bras · 1 s','Pousse un bras, l\'autre reste à hauteur d\'oreille',1],[1.6,'⬇️ Descente · 1,5 s','Redescends en contrôlant',.55],[1,'⬆️ Autre bras · 1 s','Gaine les abdos, le buste ne penche pas',1],[1.6,'⬇️ Descente · 1,5 s','Contrôle jusqu\'en bas',.55]],
+ w:'Le buste ne doit pas pencher du côté qui pousse.'},
+'Crunch lesté':{z:{e:-7,w:-42,h:-48},v:'s',pr:[{c:'mat',x0:-95,x1:65}],m:['abs'],db:{h:'c',w:0},tr:'hd',
+ b:{x:0,y:-10,l:{x:42,y:-5,s:1},a:[10,100,.6,.4]},k:[{t:-90},{t:-112,n:-12}],
+ p:[[1,'⬆️ Enroule · 1 s','Altère serrée sur la poitrine, décolle les omoplates',1],[2,'⬇️ Déroule · 2 s','Redescends lentement sans relâcher',.5]],
+ w:'Le menton ne colle pas la poitrine : garde un poing d\'écart.'},
+'Flexion latérale':{v:'f',m:['obl'],m2:['lomb'],db:{h:'a',w:0},tr:'ah',
+ b:{A:[40,150]},k:[{t:180,a:[0,0],l:[0,0],L:[0,0]},{t:166,a:[14,14],l:[14,14],L:[-14,-14]},{t:186,a:[-6,-6],l:[-6,-6],L:[6,6]}],
+ p:[[1.6,'⬇️ Descente côté altère · 1,5 s','Glisse l\'altère le long de la cuisse',.6],[1.4,'⬆️ Remonte et dépasse · 1,5 s','Les obliques opposés tirent le buste',1],[1,'↩️ Retour au centre','Bassin fixe, pas de rotation',.4]],
+ w:'Penche seulement sur le côté : ni en avant ni en arrière. Change de côté.'},
+'Dead bug altère':{z:{e:12,w:4,h:2.5},v:'s',pr:[{c:'mat',x0:-95,x1:75}],m:['abs'],m2:['psoas'],db:{h:'c',o:'a',w:1},g:[0,1],
+ b:{x:0,y:-10,t:-90,a:[90,90],l:[90,0],L:[90,0]},k:[{},{l:[8,8]},{},{L:[8,8]}],
+ p:[[1.5,'➡️ Étends une jambe','Bas du dos collé au sol, altère tenue bras tendus',1],[1.2,'⬅️ Ramène','Genou au-dessus de la hanche',.5],[1.5,'➡️ Autre jambe','Expire en étendant',1],[1.2,'⬅️ Ramène','Contrôle, sans élan',.5]],
+ w:'Si le bas du dos décolle, n\'étends pas la jambe aussi bas.'},
+'Rowing allongé':{v:'s',pr:[{c:'bed',x0:-145,x1:-2,h:56}],m:['dos'],m2:['bic','delt'],db:{h:'aA',w:1},tr:'ah',
+ b:{x:-45,y:-63.5,t:96,l:[0,0],f:-95,n:-8},k:[{a:[94,94]},{a:[-46,74]}],
+ p:[[1,'⬆️ Tirage · 1 s','Ventre sur le lit, tire les coudes vers le plafond',1],[2,'⬇️ Descente · 2 s','Bras tendus, étire le haut du dos',.55]],
+ w:'Le buste reste posé : aucun élan possible, c\'est le but.'},
+'Rowing coudes écartés':{v:'s',an:'la',m:['dos','trap'],m2:['delt'],db:{h:'aA',w:0},tr:'ah',
+ b:{x:0,y:-4,t:125,l:[73,47]},k:[{a:[55,55,1,1]},{a:[70,55,.3,1]}],
+ p:[[1,'⬆️ Tirage · 1 s','Coudes vers l\'extérieur, à hauteur d\'épaules',1],[2,'⬇️ Descente · 2 s','Dos plat, bras tendus en bas',.55]],
+ w:'Paumes vers les pieds, coudes écartés : c\'est le haut du dos qui travaille.'},
+'Soulevé de terre altères':{v:'s',m:['glu','isch'],m2:['lomb','quad'],db:{h:'aA',w:1},tr:'ah',
+ b:{l:{x:0,y:-4,s:1}},k:[{x:0,y:-90.5,t:180,a:[0,0]},{x:-24,y:-62,t:125,a:[55,55]}],
+ p:[[2,'⬇️ Descente · 2 s','Hanches en arrière puis genoux fléchis, altères le long des jambes',.55],[1,'⬆️ Remonte · 1 s','Pousse le sol, dos plat, hanches vers l\'avant',1]],
+ w:'Dos plat obligatoire : poitrine sortie, regard devant toi au sol.'},
+'Squat sumo':{z:{k:24,a:25,t:30,e:12,w:3,h:2},v:'s',m:['glu','quad'],m2:['isch'],db:{h:'c',o:'t',w:1},tr:'hp',
+ b:{l:{x:0,y:-4,s:1},f:70},k:[{x:0,y:-90.5,t:180,a:[0,0]},{x:-12,y:-54,t:165,a:[15,15]}],
+ p:[[2,'⬇️ Descente · 2 s','Pieds très écartés, pointes vers l\'extérieur, genoux suivent les pieds',.55],[1,'⬆️ Remonte · 1 s','Serre les fessiers en haut',1]],
+ w:'Les genoux ne rentrent pas : pousse-les vers l\'extérieur.'},
+'Fente latérale':{z:{ah:12,aw:10,ae:6},v:'f',m:['glu','quad'],m2:['isch'],db:{h:'c',o:'t',w:1},tr:'hp',
+ b:{a:[15,-155],L:{x:-12,y:-4,s:1}},
+ k:[{x:-3.5,y:-91,l:{x:5,y:-4,s:-1}},{x:15,y:-86,l:{x:40,y:-16,s:-1}},{x:55,y:-60,l:{x:75,y:-4,s:-1}},{x:15,y:-86,l:{x:40,y:-16,s:-1}}],
+ p:[[.7,'↔️ Grand pas sur le côté','Pied pointé vers l\'avant',.4],[1.4,'⬇️ Assieds-toi sur la jambe','Fesses en arrière, l\'autre jambe reste tendue',.6],[1,'⬆️ Repousse','Pousse sur le talon pour revenir',1],[.7,'↩️ Pieds joints','Puis l\'autre côté',.4]],
+ w:'Le genou plié reste au-dessus du pied, pas vers l\'intérieur.'},
+'Fentes avant':{v:'s',m:['quad','glu'],m2:['isch'],db:{h:'aA',w:1},tr:'hp',g:[0,2],
+ b:{L:{x:0,y:-4,s:1}},
+ k:[{x:2,y:-90.5,t:180,l:{x:4,y:-4,s:1},f:75,F:75},{x:8,y:-88,t:179,l:{x:28,y:-16,s:1},f:60,F:75},{x:24,y:-50,t:176,l:{x:58,y:-4,s:1},f:75,F:20},{x:8,y:-88,t:179,l:{x:28,y:-16,s:1},f:60,F:75}],
+ p:[[.7,'↪️ Grand pas en avant','Pose le talon d\'abord',.4],[1.4,'⬇️ Descente','Genou arrière vers le sol, buste droit',.6],[1,'⬆️ Pousse et reviens','Pousse fort sur le talon avant',1],[.7,'↩️ Pieds joints','Puis l\'autre jambe',.4]],
+ w:'Pas assez grand = genou avant trop loin devant les orteils.'},
+'Squat altères':{v:'s',m:['quad','glu'],m2:['isch'],db:{h:'aA',w:1},tr:'hp',
+ b:{l:{x:0,y:-4,s:1}},k:[{x:0,y:-90.5,t:180,a:[0,0]},{x:-20,y:-48,t:150,a:[30,30]}],
+ p:[[2,'⬇️ Descente · 2 s','Altères le long du corps, cuisses parallèles au sol',.55],[1,'⬆️ Remonte · 1 s','Pousse dans les talons, poitrine haute',1]],
+ w:'Talons au sol et dos droit tout du long.'},
+'Leg curl altère':{v:'s',pr:[{c:'mat',x0:-110,x1:85}],m:['isch'],m2:['calf'],db:{h:'ft'},tr:'la',
+ b:{x:0,y:-8,t:90,f:-100,a:[120,180],n:6},k:[{l:[0,0]},{l:[0,-80]}],
+ p:[[1.2,'⬆️ Talons vers les fesses · 1 s','Altère serrée entre les pieds, bassin collé au tapis',1],[2,'⬇️ Descente · 2 s','Redescends lentement sans poser',.55]],
+ w:'Commence très léger : l\'altère doit être bien coincée entre les pieds.'},
+'Mollets assis':{v:'s',pr:[{c:'chair',x:-24,b:'l'}],m:['calf'],db:{h:'aA',w:0},g:[0,1],
+ b:{x:-2,y:-53,a:[25,75]},k:[{l:toe(52,75),f:75},{l:toe(52,35),f:35},{l:toe(52,35),f:35}],
+ p:[[1,'⬆️ Monte · 1 s','Altères posées sur les genoux, monte sur les pointes',1],[1,'⏸ Tiens 1 s','Contraction en haut',1],[2,'⬇️ Descends · 2 s','Talons au sol lentement',.5]],
+ w:'Amplitude complète : talons bien en bas, pointes bien en haut.'},
 'Kickback':{z:{Aw:-11,Ah:-11},v:'s',an:'la',m:['tri'],db:{h:'a',w:1},tr:'ah',
  b:{x:5,y:-4,t:105,l:[95,70],A:[60,95]},k:[{a:[0,75]},{a:[0,0]}],
  p:[[1,'➡️ Extension · 1 s','Tends le bras vers l\'arrière, coude fixe',1],[2,'⬅️ Retour · 2 s','Ramène l\'avant-bras à la verticale',.55]],
@@ -537,6 +596,8 @@ epaules|Élévations latérales|Debout, bras fléchis, monte les altères sur le
 epaules|Oiseau|Buste penché dos plat, altères sous la poitrine, ouvre les bras sur les côtés coudes légèrement fléchis.|oiseau haltères deltoïde postérieur
 epaules|Développé Arnold|Assis sur la chaise, altères devant le visage paumes vers toi : ouvre les coudes en tournant les paumes vers l'avant et pousse au-dessus de la tête.|développé arnold haltères
 epaules|Élévations frontales|Debout, monte les altères devant toi bras presque tendus jusqu'à hauteur d'épaules, redescends lentement.|élévations frontales haltères
+epaules|Rowing menton|Debout, altères devant les cuisses, tire les coudes vers le haut jusqu'à hauteur de poitrine.|rowing menton haltères
+epaules|Développé alterné|Debout, altères à hauteur d'épaules, pousse un bras puis l'autre au-dessus de la tête.|développé alterné haltères debout
 biceps|Curl alterné|Debout, coudes collés, monte une altère paume vers le haut puis redescends lentement.|curl biceps haltères
 biceps|Curl marteau|Paumes face à face, monte les altères sans bouger les coudes.|curl marteau
 biceps|Curl concentré|Assis sur la chaise, coude contre la cuisse, curl lent d'une altère.|curl concentré
@@ -552,23 +613,35 @@ triceps|Développé serré au sol|Allongé sur le tapis, paumes face à face, co
 abdos|Crunch|Sur le tapis, genoux fléchis, enroule le buste sans tirer sur la nuque.|crunch abdos
 abdos|Planche|Sur les avant-bras, corps aligné, ventre et fessiers serrés. Tiens la position.|planche gainage
 abdos|Relevé de jambes|Sur le tapis, monte les jambes tendues puis redescends sans toucher le sol.|relevé de jambes abdos
+abdos|Crunch lesté|Sur le tapis, une altère serrée sur la poitrine, enroule le buste.|crunch lesté haltère
+abdos|Flexion latérale|Debout, une altère dans une main, penche le buste sur le côté puis remonte. Change de côté.|flexion latérale haltère obliques
+abdos|Dead bug altère|Sur le dos, une altère tenue bras tendus au-dessus de la poitrine, genoux à 90° : étends une jambe puis l'autre.|dead bug haltère
 dos|Rowing un bras|Main et genou sur le lit, tire l'altère vers la hanche, omoplate serrée.|rowing un bras haltère
 dos|Rowing penché|Buste penché dos plat, tire les deux altères vers le bas des côtes.|rowing penché haltères
 dos|Shrugs|Debout, altères le long du corps, hausse les épaules puis relâche.|shrugs haltères trapèzes
+dos|Rowing allongé|À plat ventre sur le lit, poitrine au bord, tire les deux altères vers les hanches.|rowing allongé haltères
+dos|Rowing coudes écartés|Buste penché, paumes vers les pieds, tire les coudes vers l'extérieur à hauteur d'épaules.|rowing haltères coudes écartés
 lombaires|Superman|À plat ventre sur le tapis, lève bras et jambes, tiens 2 s.|superman lombaires
 lombaires|Bird-dog|À quatre pattes, étends bras et jambe opposés sans cambrer.|bird dog
 lombaires|Good morning|Altère contre la poitrine, hanches en arrière dos plat, remonte.|good morning haltère
 fessiers|Pont fessier|Sur le tapis, pieds au sol, monte le bassin en serrant les fessiers.|pont fessier
 fessiers|Hip thrust|Haut du dos sur le lit, altère sur les hanches, monte le bassin.|hip thrust haltère
 fessiers|Fentes arrière|Recule une jambe, genou près du sol, altères en mains, reviens.|fentes arrière haltères
+fessiers|Squat sumo|Pieds très écartés pointes vers l'extérieur, une altère tenue entre les jambes, descends dos droit.|squat sumo haltère
+fessiers|Fente latérale|Altère contre la poitrine, grand pas sur le côté, assieds-toi sur la jambe pliée, l'autre tendue.|fente latérale haltère
 cuisses|Squat sur chaise|Assieds-toi sur la chaise sans t'y poser, puis remonte. Altère contre la poitrine pour durcir.|squat chaise
 cuisses|Squat gobelet|Altère contre la poitrine, cuisses parallèles au sol, dos droit.|goblet squat
 cuisses|Squat bulgare|Pied arrière sur la chaise, descends sur la jambe avant.|squat bulgare
+cuisses|Fentes avant|Altères en mains, grand pas en avant, genou arrière vers le sol, puis reviens.|fentes avant haltères
+cuisses|Squat altères|Altères le long du corps, descends cuisses parallèles au sol, remonte.|squat haltères
 ischios|Soulevé de terre roumain|Altères devant les cuisses, hanches en arrière, dos plat, jambes presque tendues.|soulevé de terre roumain haltères
 ischios|Pont une jambe|Pont fessier avec une jambe tendue en l'air.|pont fessier une jambe
 ischios|Soulevé une jambe|Sur une jambe, buste penché, jambe libre en arrière, altère en main.|soulevé de terre une jambe haltère
+ischios|Soulevé de terre altères|Altères le long des jambes, hanches en arrière et genoux fléchis, dos plat, puis remonte.|soulevé de terre haltères
+ischios|Leg curl altère|À plat ventre sur le tapis, une altère coincée entre les pieds, ramène les talons vers les fesses.|leg curl haltère allongé
 mollets|Mollets debout|Altères en mains, monte sur la pointe des pieds, descends lentement.|mollets debout haltères
-mollets|Mollets une jambe|Même mouvement sur une jambe, une main sur le mur.|mollets une jambe`.split('\n').map(l=>{const a=l.split('|');return{m:a[0],n:a[1],d:a[2],q:a[3]}});
+mollets|Mollets une jambe|Même mouvement sur une jambe, une main sur le mur.|mollets une jambe
+mollets|Mollets assis|Assis sur la chaise, altères posées sur les genoux, monte sur la pointe des pieds.|mollets assis haltères`.split('\n').map(l=>{const a=l.split('|');return{m:a[0],n:a[1],d:a[2],q:a[3]}});
 D.push(...`velo|Step-up chaise|Un pied sur l'assise de la chaise, monte en poussant avec la jambe d'appui, redescends lentement. Altères en mains pour durcir.|step up chaise haltères
 velo|Planche latérale|Sur un avant-bras, corps aligné, bassin haut. Tiens la position, par côté.|planche latérale
 velo|Squat isométrique|Dos au mur, cuisses parallèles au sol, tiens la position (proche de la position en côte).|chaise murale wall sit
@@ -610,7 +683,7 @@ $('#md').onclick=ev=>{const b=ev.target.closest('button');if(!b)return;mode=b.da
 const url=x=>links[x.n]||'https://www.youtube.com/results?search_query='+encodeURIComponent(x.q+' exercice');
 // Ordre optimal : polyarticulaires des gros muscles d'abord (on est frais), puis isolation, petits muscles,
 // et enfin bas du dos et gainage, qui stabilisent tous les autres exercices et ne doivent pas être fatigués avant.
-const PO=new Set(['Développé couché altères','Développé au sol','Développé serré','Développé en pont','Développé épaules','Développé Arnold','Dips sur chaise','Développé serré au sol','Rowing un bras','Rowing penché','Fentes arrière','Squat sur chaise','Squat gobelet','Squat bulgare','Soulevé de terre roumain','Soulevé une jambe','Good morning']),
+const PO=new Set(['Développé couché altères','Développé au sol','Développé serré','Développé en pont','Développé épaules','Développé Arnold','Dips sur chaise','Développé serré au sol','Rowing un bras','Rowing penché','Fentes arrière','Squat sur chaise','Squat gobelet','Squat bulgare','Soulevé de terre roumain','Soulevé une jambe','Good morning','Rowing menton','Développé alterné','Rowing allongé','Rowing coudes écartés','Soulevé de terre altères','Squat sumo','Fente latérale','Fentes avant','Squat altères']),
 MO=['cuisses','fessiers','ischios','dos','pecs','epaules','triceps','biceps','mollets','lombaires','abdos'],
 TI=['💥 Polyarticulaires — gros muscles, tant que tu es frais','🎯 Isolation — termine les gros muscles','💪 Petits muscles — bras et mollets','🧱 Bas du dos','🔥 Gainage — toujours en dernier'],
 tier=x=>x.m=='abdos'?4:x.m=='lombaires'?3:['biceps','triceps','mollets'].includes(x.m)?2:PO.has(x.n)?0:1,
@@ -618,18 +691,37 @@ order=a=>a.map((x,i)=>[x,i]).sort(([x,i],[y,j])=>tier(x)-tier(y)||MO.indexOf(x.m
 // circuit : on alterne bas / haut du corps (un muscle récupère pendant que l'autre travaille), gainage en fin de tour
 function circ(a){const o=order(a),LO=['cuisses','fessiers','ischios','mollets'],rr=xs=>{const g=[];xs.forEach(x=>{const q=g.find(q=>q[0].m==x.m);q?q.push(x):g.push([x])});const r=[];while(g.some(q=>q.length))g.forEach(q=>q.length&&r.push(q.shift()));return r},
  m=o.filter(x=>tier(x)<3),lo=rr(m.filter(x=>LO.includes(x.m))),up=rr(m.filter(x=>!LO.includes(x.m))),r=[];while(lo.length||up.length){lo.length&&r.push(lo.shift());up.length&&r.push(up.shift())}return r.concat(o.filter(x=>tier(x)>=3))}
-function card(x,l,t,i){const w=/alt[eè]re/i.test(x.n+x.d),k=ls.g('kg:'+x.n,'');
-return `<div class="c"><b>${i?i+'. ':''}${x.n}</b>${i?` <span class="tg">${M[x.m]||'🚴 Vélo'}</span>`:''}<div class="rp">${mode=='circ'?`Circuit · ${l.cr} tours × 40 s ${/^(Planche|Squat isom)/.test(x.n)?'de maintien':'(≈ 15–20 reps)'}`:t?`Tabata ${cfg.w} s / ${cfg.r} s × ${cfg.n}`:/^(Planche|Squat isom)/.test(x.n)?`${l.s} × ${l.p} s`:`${l.s} × ${l.r} reps`}</div><p>${x.d}</p>${w?`<label>Charge par altère (kg)<input type="number" step="0.5" inputmode="decimal" data-k="${x.n}" value="${k}"></label>`:''}${AN.has(x.n)?`<div class="anw" data-an="${x.n}"></div>`:''}<div class="bt"><a href="${url(x)}" target="_blank" rel="noopener">▶ Vidéo</a><button data-tg>🎬 Animation</button><button data-e="${x.n}">✎ Lien</button>${mode!='reps'?'':'<button data-rest="1">⏱ Repos</button>'}</div><button class="sw" data-sw="${x.n}">🔄 Changer d'exercice</button></div>`}
+// charge de chaque exercice : L léger, M moyen, H lourd (absent = poids du corps)
+const WC={};`L:Écartés altères,Écartés au sol,Svend press altère,Élévations latérales,Oiseau,Élévations frontales,Curl araignée,Kickback,Extension un bras,Leg curl altère
+M:Développé serré,Pullover altère,Développé épaules,Développé Arnold,Rowing menton,Développé alterné,Curl alterné,Curl marteau,Curl concentré,Curl Zottman,Curl croisé,Extension couchée,Développé serré au sol,Crunch lesté,Dead bug altère,Rowing allongé,Rowing coudes écartés,Good morning,Fentes arrière,Fente latérale,Squat bulgare,Fentes avant,Soulevé une jambe,Mollets une jambe,Step-up chaise
+H:Développé couché altères,Développé au sol,Développé en pont,Extension nuque,Flexion latérale,Rowing un bras,Rowing penché,Shrugs,Soulevé de terre altères,Hip thrust,Squat sumo,Squat gobelet,Squat altères,Soulevé de terre roumain,Mollets debout,Mollets assis`.split('\n').forEach(l=>l.slice(2).split(',').forEach(n=>{WC[n]=l[0]}));
+const WS={L:[2.5,5,8],M:[5,8,12],H:[8,12,20]},WN={L:'légère',M:'moyenne',H:'lourde'},
+sug=x=>WC[x.n]?Math.max(1,Math.round(WS[WC[x.n]][lvl-1]*(mode=='circ'?.6:1))):0,
+kgOf=x=>{const v=parseFloat(ls.g('kg:'+x.n,''));return isNaN(v)?sug(x):v};
+let fav=ls.g('fav',[]),wsort=false;const isF=n=>fav.indexOf(n)>=0;
+// ordre par poids : exercices de même poids regroupés, du plus lourd au plus léger ; poids du corps ensuite ; bas du dos et gainage toujours à la fin
+function byW(a){const o=order(a),sw=xs=>xs.map((x,i)=>[x,i]).sort((p,q)=>kgOf(q[0])-kgOf(p[0])||p[1]-q[1]).map(p=>p[0]),m=o.filter(x=>tier(x)<3),c=o.filter(x=>tier(x)>=3);
+ return sw(m.filter(x=>WC[x.n])).concat(m.filter(x=>!WC[x.n]),sw(c.filter(x=>WC[x.n])),c.filter(x=>!WC[x.n]))}
+const nchg=a=>{let n=0,p=null;a.forEach(x=>{if(!WC[x.n])return;const k=kgOf(x);if(p!=null&&k!=p)n++;p=k});return n},
+wbase=()=>kind=='velo'?cur:mode=='circ'?circ(cur):order(cur),
+wtxt=()=>wsort?`Changements de poids : ${nchg(byW(cur))} (au lieu de ${nchg(wbase())} dans l'ordre conseillé).`:`Changements de poids : ${nchg(wbase())} dans l'ordre conseillé, ${nchg(byW(cur))} si tu réorganises par poids.`;
+function wpanel(a){const ws=a.filter(x=>WC[x.n]);if(!ws.length)return'';
+ return `<div class="c wp"><b>⚖️ Poids de la séance</b><p class="sub">Conseils pour ton niveau${mode=='circ'?', allégés pour le circuit (~60 %)':''}. Modifie-les si besoin : ils sont mémorisés.</p>`+
+ ws.map(x=>`<div class="wr"><label class="wn" for="w${D.indexOf(x)}">${isF(x.n)?'♥ ':''}${x.n}<small>Charge ${WN[WC[x.n]]} · conseillé ${sug(x)} kg</small></label><input type="number" step="0.5" min="0" inputmode="decimal" id="w${D.indexOf(x)}" data-k="${x.n}" value="${ls.g('kg:'+x.n,'')}" placeholder="${sug(x)}"><span class="wu">kg</span></div>`).join('')+
+ `<p class="sub" id="wcg">${wtxt()}</p><div class="row"><button data-wa>↺ Poids conseillés</button><button data-wo class="${wsort?'on':''}">${wsort?'↩ Ordre conseillé':'🔁 Réorganiser par poids'}</button></div></div>`}
+function card(x,l,t,i){const w=!!WC[x.n],k=ls.g('kg:'+x.n,'');
+return `<div class="c">${i?`<button class="fv${isF(x.n)?' on':''}" data-fv="${x.n}" aria-pressed="${isF(x.n)}" aria-label="Favori">${isF(x.n)?'♥':'♡'}</button>`:''}<b>${i?i+'. ':''}${x.n}</b>${i?` <span class="tg">${M[x.m]||'🚴 Vélo'}</span>`:''}<div class="rp">${mode=='circ'?`Circuit · ${l.cr} tours × 40 s ${/^(Planche|Squat isom)/.test(x.n)?'de maintien':'(≈ 15–20 reps)'}`:t?`Tabata ${cfg.w} s / ${cfg.r} s × ${cfg.n}`:/^(Planche|Squat isom)/.test(x.n)?`${l.s} × ${l.p} s`:`${l.s} × ${l.r} reps`}</div><p>${x.d}</p>${w?`<label>Charge par altère (kg) · conseillé ${sug(x)} kg<input type="number" step="0.5" min="0" inputmode="decimal" data-k="${x.n}" value="${k}" placeholder="${sug(x)}"></label>`:''}${AN.has(x.n)?`<div class="anw" data-an="${x.n}"></div>`:''}<div class="bt"><a href="${url(x)}" target="_blank" rel="noopener">▶ Vidéo</a><button data-tg>🎬 Animation</button><button data-e="${x.n}">✎ Lien</button>${mode!='reps'?'':'<button data-rest="1">⏱ Repos</button>'}</div><button class="sw" data-sw="${x.n}">🔄 Changer d'exercice</button></div>`}
 let list=[];
-$('#ok').onclick=()=>kind=='st'?gst():go(2);$('#go').onclick=()=>{ro=0;gen()};$('#rot').onclick=()=>{ro++;gen()};let ro=0;
+$('#ok').onclick=()=>kind=='st'?gst():go(2);$('#go').onclick=()=>{ro=0;wsort=false;gen()};$('#rot').onclick=()=>{ro++;gen()};let ro=0;
 function scard(x){return `<div class="c"><b>${x.n}</b><div class="rp">${side(x)?'30 s × 2 côtés':'30 s'}</div><p>${x.d}</p>${AN.has(x.n)?`<div class="anw" data-an="${x.n}"></div>`:''}<div class="bt"><a href="${url(x)}" target="_blank" rel="noopener">▶ Vidéo</a><button data-tg>🎬 Animation</button><button data-e="${x.n}">✎ Lien</button><button data-h="${x.n}">⏱ Timer</button></div></div>`}
 function gst(){let h='';list=[];sel.forEach(m=>{h+=`<h3>${M[m]}</h3>`;D.filter(x=>x.m=='st:'+m).forEach(x=>{list.push(x);h+=scard(x)})});$('#list').innerHTML=h;AN.scan($('#list'));$('#ttl').textContent='🧘 Étirements';$('#inf').textContent=list.length+' étirements · 30 s · muscles chauds, sans douleur, sans rebond';$('#tab').textContent='▶ Lancer les étirements';$('#tab').hidden=false;$('#rot').hidden=true;$('#dt').hidden=true;go(3)}
 let cur=[],stl=[];const AM={pec:'pecs',delt:'epaules',bic:'biceps',tri:'triceps',abs:'abdos',obl:'abdos',dos:'dos',trap:'dos',lomb:'lombaires',glu:'fessiers',quad:'cuisses',psoas:'cuisses',isch:'ischios',calf:'mollets'};
 // affiche la séance en cours (cur) : ordre optimal sauf en vélo, où l'ordre du circuit est gardé
 function show(){const l=L[lvl],t=mode=='tab',ci=mode=='circ';let h='';list=[];
-if(kind=='velo')cur.forEach(x=>{list.push(x);h+=card(x,l,t,list.length)});
-else if(ci){h+=`<h3>🔁 Circuit — enchaîne dans cet ordre, puis recommence</h3><p class="sub">Bas et haut du corps alternés, gainage à la fin du tour.</p>`;circ(cur).forEach(x=>{list.push(x);h+=card(x,l,t,list.length)})}
-else{let tp=-1;h+=`<p class="sub">Ordre optimisé : gros muscles avant petits, polyarticulaires avant isolation, gainage à la fin.</p>`;
+if(wsort){const a=byW(cur);h+=wpanel(a)+`<h3>⚖️ Ordre par poids</h3><p class="sub">Même poids regroupés, du plus lourd au plus léger. Bas du dos et gainage restent à la fin.</p>`;a.forEach(x=>{list.push(x);h+=card(x,l,t,list.length)})}
+else if(kind=='velo'){h+=wpanel(cur);cur.forEach(x=>{list.push(x);h+=card(x,l,t,list.length)})}
+else if(ci){h+=wpanel(circ(cur));h+=`<h3>🔁 Circuit — enchaîne dans cet ordre, puis recommence</h3><p class="sub">Bas et haut du corps alternés, gainage à la fin du tour.</p>`;circ(cur).forEach(x=>{list.push(x);h+=card(x,l,t,list.length)})}
+else{let tp=-1;h+=wpanel(order(cur))+`<p class="sub">Ordre optimisé : gros muscles avant petits, polyarticulaires avant isolation, gainage à la fin.</p>`;
 order(cur).forEach(x=>{if(tier(x)!=tp){tp=tier(x);h+=`<h3>${TI[tp]}</h3>`}list.push(x);h+=card(x,l,t,list.length)})}
 // retour au calme : étirements des muscles travaillés (muscle de l'exercice + muscles principaux de son animation)
 const wm=new Set();cur.forEach(x=>{if(M[x.m])wm.add(x.m);for(const k of (AN.A[x.n]||{}).m||[])if(AM[k])wm.add(AM[k])});
@@ -642,15 +734,22 @@ nx=[...pool.slice(i+1),...pool.slice(0,i)].find(y=>!cur.includes(y));if(!nx){toa
 cur[cur.indexOf(x)]=nx;show();const e=$('#list').querySelector(`[data-sw="${CSS.escape(nx.n)}"]`),c=e&&e.closest('.c');if(c){c.scrollIntoView({block:'center'});c.classList.add('fl')}}
 function gen(){if(!lvl){toast('Choisis d\'abord ton niveau.');$('#lv').scrollIntoView({block:'center'});return}
 const l=L[lvl],t=mode=='tab';cfg={w:+$('#tw').value||20,r:+$('#tr').value||0,n:+$('#tn2').value||1,p:+$('#tp2').value||0};
-cur=kind=='velo'?V.slice(0,[0,7,9,11][lvl]).map(n=>D.find(y=>y.n==n)):[...sel].flatMap(m=>{const E=D.filter(x=>x.m==m),ne=mode=='circ'?Math.max(1,Math.min(l.ex,Math.floor(10/sel.size))):l.ex;return E.slice(0,Math.min(ne,E.length)).map((_,i)=>E[(ro*ne+i)%E.length])});
+cur=kind=='velo'?V.slice(0,[0,7,9,11][lvl]).map(n=>D.find(y=>y.n==n)):[...sel].flatMap(m=>{const E0=D.filter(x=>x.m==m),E=E0.filter(x=>isF(x.n)).concat(E0.filter(x=>!isF(x.n))),ne=mode=='circ'?Math.max(1,Math.min(l.ex,Math.floor(10/sel.size))):l.ex;return E.slice(0,Math.min(ne,E.length)).map((_,i)=>E[(ro*ne+i)%E.length])});
 show();$('#ttl').textContent=(kind=='velo'?'🚴 Vélo · ':'')+l.n;
 $('#tab').hidden=mode=='reps';$('#rot').hidden=kind=='velo';$('#tab').textContent=mode=='circ'?'▶ Lancer le circuit':'▶ Lancer le tabata';$('#dt').hidden=false;
 $('#dt').querySelector('summary').textContent=mode=='circ'?'🔥 Conseils brûle-graisse':'📈 Progression des charges';
 $('#adv').innerHTML=mode=='circ'?`<li><b>Charge</b> : environ 60 % de ta charge habituelle. Tu dois tenir 40 s propres (15–20 reps), les 3 dernières difficiles.</li><li><b>Ne prends pas trop léger</b> : en régime, c'est l'effort proche de l'échec qui garde tes muscles. Trop facile = muscle perdu, pas plus de gras brûlé.</li><li><b>Repos courts</b> : 20 s entre exos, le cœur reste haut. C'est la densité qui augmente la dépense.</li><li>Quand 4 tours deviennent faciles : ajoute 1–2 kg ou passe à 45 s d'effort.</li><li><b>Semaine type</b> : 2 circuits + 1 séance classique (charges plus lourdes), et vélo ou marche rapide 30 min les autres jours.</li><li><b>Régime pauvre en glucides (phase d'attaque Dukan)</b> : énergie basse les premiers jours. Commence à 2 tours, pas de tabata. Bois beaucoup. Vertige ou malaise : arrête.</li>`:`<li><b>Charge de départ</b> (indicatif, par altère) : haut du corps ${l.h}, bas du corps ${l.b}.</li><li>Choisis une charge qui rend les 2 dernières reps difficiles mais propres.</li><li><b>Double progression</b> : quand tu atteins le haut de la fourchette (${l.r.split('–')[1]} reps) sur toutes les séries, ajoute 1–2 kg (haut du corps) ou 2–4 kg (bas du corps), puis repars du bas de la fourchette.</li><li>Technique qui se dégrade : ne monte pas.</li><li>Altères trop légères et plus de cran possible : descente en 3 s, pause en bas, ou version à un bras / une jambe.</li><li>Une seule variable à la fois : charge OU reps OU séries.</li><li>48 h entre deux séances du même muscle. Toutes les 6–8 semaines : semaine allégée (−20 % de charge).</li>`;
 go(3)}
-$('#list').addEventListener('input',ev=>{const k=ev.target.dataset.k;if(k)ls.s('kg:'+k,ev.target.value)});
+$('#list').addEventListener('input',ev=>{const e=ev.target,k=e.dataset.k;if(!k)return;ls.s('kg:'+k,e.value);
+ $('#list').querySelectorAll('input[data-k]').forEach(o=>{if(o!==e&&o.dataset.k===k)o.value=e.value});const c=$('#wcg');if(c)c.textContent=wtxt()});
+$('#list').addEventListener('change',ev=>{if(wsort&&ev.target.dataset.k){const y=scrollY;show();scrollTo(0,y)}});
 $('#list').addEventListener('click',ev=>{const b=ev.target.closest('button');if(!b)return;
 if(b.dataset.sw!=null){swap(b.dataset.sw);return}
+if(b.dataset.fv){const n=b.dataset.fv,on=!isF(n);fav=on?fav.concat(n):fav.filter(f=>f!==n);ls.s('fav',fav);
+ $('#list').querySelectorAll('[data-fv]').forEach(o=>{if(o.dataset.fv===n){o.classList.toggle('on',on);o.textContent=on?'♥':'♡';o.setAttribute('aria-pressed',on)}});
+ toast(on?'♥ Favori : il sera proposé en priorité':'Retiré des favoris');return}
+if(b.dataset.wo!=null){wsort=!wsort;show();toast(wsort?'Exercices regroupés par poids':'Retour à l\'ordre conseillé');$('#list').scrollIntoView();return}
+if(b.dataset.wa!=null){cur.forEach(x=>{if(WC[x.n])ls.s('kg:'+x.n,String(sug(x)))});const y=scrollY;show();scrollTo(0,y);toast('Poids conseillés appliqués');return}
 if(b.dataset.stg!=null){run(stl.flatMap(x=>hold(x)));return}
 if(b.dataset.tg!=null){const w=b.closest('.c').querySelector('.anw');if(w)w.hidden=!w.hidden;return}
 if(b.dataset.e){const c=b.closest('.c'),old=c.querySelector('.ed');if(old){old.remove();return}const x=D.find(y=>y.n==b.dataset.e),j=D.indexOf(x);
