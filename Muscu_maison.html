@@ -88,7 +88,7 @@ summary{font-weight:600}li{margin:5px 0;font-size:14px}
 <button id="b4" style="width:100%;margin-top:8px">← Retour</button>
 </section>
 <div id="tm" hidden><div id="ta" hidden></div><div id="tp"></div><div id="tc"></div><div id="tn"></div><div id="ti"></div>
-<div><button id="pa">Pause</button> <button id="sk">Passer</button> <button id="cl">Fermer</button></div></div>
+<div><button id="pa">Pause</button> <button id="sk">Passer</button> <button id="cl">Fermer</button></div><button id="ts" hidden>🧘 Enchaîner les étirements</button></div>
 
 <script>
 const AN=(()=>{
@@ -576,12 +576,16 @@ let list=[];
 $('#ok').onclick=()=>kind=='st'?gst():go(2);$('#go').onclick=()=>{ro=0;gen()};$('#rot').onclick=()=>{ro++;gen()};let ro=0;
 function scard(x){return `<div class="c"><b>${x.n}</b><div class="rp">${side(x)?'30 s × 2 côtés':'30 s'}</div><p>${x.d}</p>${AN.has(x.n)?`<div class="anw" data-an="${x.n}"></div>`:''}<div class="bt"><a href="${url(x)}" target="_blank" rel="noopener">▶ Vidéo</a><button data-tg>🎬 Animation</button><button data-e="${x.n}">✎ Lien</button><button data-h="${x.n}">⏱ Timer</button></div></div>`}
 function gst(){let h='';list=[];sel.forEach(m=>{h+=`<h3>${M[m]}</h3>`;D.filter(x=>x.m=='st:'+m).forEach(x=>{list.push(x);h+=scard(x)})});$('#list').innerHTML=h;AN.scan($('#list'));$('#ttl').textContent='🧘 Étirements';$('#inf').textContent=list.length+' étirements · 30 s · muscles chauds, sans douleur, sans rebond';$('#tab').textContent='▶ Lancer les étirements';$('#tab').hidden=false;$('#rot').hidden=true;$('#dt').hidden=true;go(3)}
-let cur=[];
+let cur=[],stl=[];const AM={pec:'pecs',delt:'epaules',bic:'biceps',tri:'triceps',abs:'abdos',obl:'abdos',dos:'dos',trap:'dos',lomb:'lombaires',glu:'fessiers',quad:'cuisses',psoas:'cuisses',isch:'ischios',calf:'mollets'};
 // affiche la séance en cours (cur) : ordre optimal sauf en vélo, où l'ordre du circuit est gardé
 function show(){const l=L[lvl],t=mode=='tab';let h='';list=[];
 if(kind=='velo')cur.forEach(x=>{list.push(x);h+=card(x,l,t,list.length)});
 else{let tp=-1;h+=`<p class="sub">Ordre optimisé : gros muscles avant petits, polyarticulaires avant isolation, gainage à la fin.</p>`;
 order(cur).forEach(x=>{if(tier(x)!=tp){tp=tier(x);h+=`<h3>${TI[tp]}</h3>`}list.push(x);h+=card(x,l,t,list.length)})}
+// retour au calme : étirements des muscles travaillés (muscle de l'exercice + muscles principaux de son animation)
+const wm=new Set();cur.forEach(x=>{if(M[x.m])wm.add(x.m);for(const k of AN.A[x.n]?.m||[])if(AM[k])wm.add(AM[k])});
+stl=MO.filter(m=>wm.has(m)).flatMap(m=>D.filter(x=>x.m=='st:'+m));const sd=stl.flatMap(hold).reduce((a,x)=>a+x.d,0);
+if(stl.length)h+=`<h3>🧘 Retour au calme — étirements</h3><p class="sub">Muscles travaillés : ${MO.filter(m=>wm.has(m)).map(m=>M[m]).join(', ')}. 30 s par étirement, muscles chauds, sans à-coups.</p><button class="p" data-stg>▶ Lancer les étirements · ${stl.length} · ≈ ${Math.ceil(sd/60)} min</button>`+stl.map(scard).join('');
 $('#list').innerHTML=h;AN.scan($('#list'));$('#inf').textContent=t?`Tabata · ${list.length} exercices`:`${l.s} séries × ${l.r} reps · repos ${l.rest} s`}
 // remplace un exercice par le suivant du même muscle (ou du circuit vélo) qui n'est pas déjà dans la séance
 function swap(n){const x=cur.find(y=>y.n==n);if(!x)return;const pool=kind=='velo'?[...new Set([...V.map(v=>D.find(y=>y.n==v)),...D.filter(y=>y.m==x.m)])]:D.filter(y=>y.m==x.m),i=pool.indexOf(x),
@@ -597,6 +601,7 @@ go(3)}
 $('#list').addEventListener('input',ev=>{const k=ev.target.dataset.k;if(k)ls.s('kg:'+k,ev.target.value)});
 $('#list').addEventListener('click',ev=>{const b=ev.target.closest('button');if(!b)return;
 if(b.dataset.sw!=null){swap(b.dataset.sw);return}
+if(b.dataset.stg!=null){run(stl.flatMap(x=>hold(x)));return}
 if(b.dataset.tg!=null){const w=b.closest('.c').querySelector('.anw');if(w)w.hidden=!w.hidden;return}
 if(b.dataset.e){const x=D.find(y=>y.n==b.dataset.e),v=prompt('Lien YouTube pour « '+x.n+' » (vide = lien par défaut) :',links[x.n]||'');if(v===null)return;v.trim()?links[x.n]=v.trim():delete links[x.n];ls.s('links',links);
 b.closest('.c').querySelector('a').href=url(x)}
@@ -622,8 +627,9 @@ function beep(long){try{const c=new(window.AudioContext||window.webkitAudioConte
 function draw(){const s=st[ix];$('#tm').dataset.p=s.t;$('#tp').textContent=s.t;$('#tn').textContent=s.n;$('#ti').textContent=(s.i||'')+(st.length>1?' · étape '+(ix+1)+'/'+st.length:'');$('#tc').textContent=left}
 let aK=null;function anim(s){const k=s.x?s.x+(s.m?'|m':''):'';if(k===aK)return;aK=k;const ok=!!s.x&&AN.has(s.x);$('#tm').classList.toggle('ha',ok);if(ok)AN.mount($('#ta'),s.x,{mini:1,mirror:s.m});else{AN.stop($('#ta'));$('#ta').hidden=true}}
 function load(){left=st[ix].d;draw();anim(st[ix]);beep(1)}
-function run(s){st=s;ix=0;aK=null;ps=false;$('#pa').textContent='Pause';$('#tm').hidden=false;clearInterval(iv);load();iv=setInterval(tick,1000)}
-function tick(){if(ps)return;left--;if(left<=0){ix++;if(ix>=st.length){clearInterval(iv);$('#tp').textContent='TERMINÉ 💪';$('#tc').textContent='✓';beep(1);return}load()}else{draw();if(left<=3)beep()}}
+function run(s){st=s;ix=0;aK=null;$('#ts').hidden=true;ps=false;$('#pa').textContent='Pause';$('#tm').hidden=false;clearInterval(iv);load();iv=setInterval(tick,1000)}
+function tick(){if(ps)return;left--;if(left<=0){ix++;if(ix>=st.length){clearInterval(iv);$('#tp').textContent='TERMINÉ 💪';$('#tc').textContent='✓';beep(1);$('#ts').hidden=!(st.some(x=>x.t=='TRAVAIL')&&stl.length);return}load()}else{draw();if(left<=3)beep()}}
+$('#ts').onclick=()=>run(stl.flatMap(x=>hold(x)));
 $('#pa').onclick=()=>{ps=!ps;$('#pa').textContent=ps?'Reprendre':'Pause'};
 $('#sk').onclick=()=>{if(ix<st.length-1){ix++;load()}else{ix=st.length-1;left=0}};
 $('#cl').onclick=()=>{clearInterval(iv);$('#tm').hidden=true;AN.stop($("#ta"));aK=null};
