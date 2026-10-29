@@ -284,10 +284,6 @@ Object.assign(AN.A,{
  k:[{a:{x:14,y:-128,s:-1}},{a:{x:52,y:-127,s:-1}},{a:{x:52,y:-127,s:-1}}],
  p:[[1.2,'➡️ Poussée · 1 s','Serre l\'altère entre les paumes et pousse devant toi',1],[.8,'⏸ Serre 1 s','Écrase l\'altère, pectoraux contractés',1],[1.8,'⬅️ Retour · 2 s','Ramène contre la poitrine sans relâcher la pression',.6]],
  w:'Ne hausse pas les épaules : la force vient de la pression des paumes.'},
-'Pompes':{z:{e:25,w:21,h:21},v:'s',an:'la',pr:[{c:'mat',x0:-105,x1:70}],m:['pec','tri'],m2:['delt','abs'],tr:'as',
- b:{x:-90,y:-12,t:110,l:[0,0],f:15,a:{x:40,y:-6,s:-1}},k:[{},{t:93}],
- p:[[2,'⬇️ Descente · 2 s','Coudes à ~45° du buste, corps gainé en planche',.55],[1,'⬆️ Poussée · 1 s','Expire et pousse le sol, bassin aligné',1]],
- w:'Bassin qui s\'affaisse ou fesses en l\'air : serre abdos et fessiers.'},
 'Développé couché altères':{v:'s',pr:[{c:'bed',x0:-110,x1:55,h:48,p:'l'}],m:['pec','tri'],m2:['delt'],db:{h:'aA',w:0},tr:'ah',
  b:{x:5,y:-57,t:-90,l:{x:40,y:-52,s:1}},k:[{a:[90,90,1,1]},{a:[10,90,.5,1]}],
  p:[[2,'⬇️ Descente · 2 s','Altères vers le bas des pectoraux, coudes à ~60°',.55],[1,'⬆️ Poussée · 1 s','Pousse vers le plafond, omoplates serrées',1]],
@@ -304,10 +300,6 @@ Object.assign(AN.A,{
  k:[{a:[8,4]},{a:[86,80]}],
  p:[[1,'⬆️ Montée · 1 s','Coudes légèrement fléchis, monte jusqu\'aux épaules',1],[2,'⬇️ Descente · 2 s','Freine la descente, ne hausse pas les épaules',.55]],
  w:'Pas d\'élan avec le buste ; mains pas plus hautes que les coudes.'},
-'Pompes pike':{z:{e:21,w:18,h:18},v:'s',an:'la',pr:[{c:'mat',x0:-75,x1:55}],m:['delt','tri'],m2:['trap','pec'],tr:'hd',
- b:{x:-60,y:-12,f:25,a:{x:28,y:-6,s:-1}},k:[{t:50,l:[105,105]},{t:31,l:[111,111]}],
- p:[[2,'⬇️ Descente · 2 s','Tête vers le sol devant les mains, hanches hautes',.55],[1,'⬆️ Poussée · 1 s','Repousse le sol en gardant le V inversé',1]],
- w:'Ne laisse pas les coudes s\'écarter à 90° du corps.'},
 'Curl alterné':{v:'s',m:['bic'],m2:['fa'],db:{h:'aA'},tr:'ah',g:[0,1],
  b:{a:[-3,0],A:[-3,0],w:.8,W:.8},k:[{},{a:[6,150],w:0},{},{A:[6,150],W:0}],
  p:[[1,'⬆️ Montée · 1 s','Tourne la paume vers le haut en montant, coude fixe',1],[2,'⬇️ Descente · 2 s','Descends lentement jusqu\'au bras tendu',.55],[1,'⬆️ Autre bras · 1 s','Même geste, l\'autre bras reste immobile',1],[2,'⬇️ Descente · 2 s','Contrôle jusqu\'en bas',.55]],
@@ -494,10 +486,8 @@ pecs|Pullover altère|Dos sur le lit, une altère à deux mains au-dessus de la 
 pecs|Écartés au sol|Allongé sur le tapis, bras légèrement fléchis, ouvre jusqu'à poser les coudes au sol puis ramène.|écartés au sol haltères
 pecs|Développé en pont|En pont fessier (bassin haut), développé des altères : cible le bas des pectoraux.|développé décliné pont fessier haltères
 pecs|Svend press altère|Debout, une altère serrée entre les paumes contre la poitrine, pousse devant toi en serrant.|svend press haltère
-pecs|Pompes|Mains sous les épaules, corps gainé, poitrine vers le sol puis pousse. Genoux au sol si trop dur.|pompes
 epaules|Développé épaules|Assis sur la chaise, dos droit, pousse les altères au-dessus de la tête.|développé épaules haltères assis
 epaules|Élévations latérales|Debout, bras fléchis, monte les altères sur les côtés jusqu'à hauteur d'épaules.|élévations latérales haltères
-epaules|Pompes pike|Hanches hautes en V, tête vers le sol puis repousse. Pieds sur la chaise pour durcir.|pompes pike
 biceps|Curl alterné|Debout, coudes collés, monte une altère paume vers le haut puis redescends lentement.|curl biceps haltères
 biceps|Curl marteau|Paumes face à face, monte les altères sans bouger les coudes.|curl marteau
 biceps|Curl concentré|Assis sur la chaise, coude contre la cuisse, curl lent d'une altère.|curl concentré
@@ -565,7 +555,7 @@ $('#md').onclick=ev=>{const b=ev.target.closest('button');if(!b)return;mode=b.da
 const url=x=>links[x.n]||'https://www.youtube.com/results?search_query='+encodeURIComponent(x.q+' exercice');
 // Ordre optimal : polyarticulaires des gros muscles d'abord (on est frais), puis isolation, petits muscles,
 // et enfin bas du dos et gainage, qui stabilisent tous les autres exercices et ne doivent pas être fatigués avant.
-const PO=new Set(['Pompes','Développé couché altères','Développé au sol','Développé serré','Développé en pont','Développé épaules','Pompes pike','Dips sur chaise','Rowing un bras','Rowing penché','Fentes arrière','Squat sur chaise','Squat gobelet','Squat bulgare','Soulevé de terre roumain','Soulevé une jambe','Good morning']),
+const PO=new Set(['Développé couché altères','Développé au sol','Développé serré','Développé en pont','Développé épaules','Dips sur chaise','Rowing un bras','Rowing penché','Fentes arrière','Squat sur chaise','Squat gobelet','Squat bulgare','Soulevé de terre roumain','Soulevé une jambe','Good morning']),
 MO=['cuisses','fessiers','ischios','dos','pecs','epaules','triceps','biceps','mollets','lombaires','abdos'],
 TI=['💥 Polyarticulaires — gros muscles, tant que tu es frais','🎯 Isolation — termine les gros muscles','💪 Petits muscles — bras et mollets','🧱 Bas du dos','🔥 Gainage — toujours en dernier'],
 tier=x=>x.m=='abdos'?4:x.m=='lombaires'?3:['biceps','triceps','mollets'].includes(x.m)?2:PO.has(x.n)?0:1,
