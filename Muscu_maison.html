@@ -820,5 +820,7 @@ function tick(){if(ps)return;left--;if(left<=0){ix++;if(ix>=st.length){clearInte
 $('#ts').onclick=()=>run(stl.flatMap(x=>hold(x)));
 $('#pa').onclick=()=>{ps=!ps;$('#pa').textContent=ps?'Reprendre':'Pause'};
 $('#sk').onclick=()=>{if(ix<st.length-1){ix++;load()}else{ix=st.length-1;left=0}};
+window.appBack=()=>{if(!$('#tm').hidden){$('#cl').click();return true}const cur=['s1','s2','s3','s4'].find(id=>!$('#'+id).hidden);
+ if(cur=='s3'){if(kind=='st')go(1);else go(2);return true}if(cur=='s2'||cur=='s4'){go(1);return true}return false};
 $('#cl').onclick=()=>{clearInterval(iv);$('#tm').hidden=true;$('#twd').hidden=true;AN.stop($("#ta"));aK=null};
 </script></body></html>
