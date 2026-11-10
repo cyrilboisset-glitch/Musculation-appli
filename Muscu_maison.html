@@ -3,9 +3,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Muscu maison</title>
 <style>
-:root{--bg:#f4f4f1;--fg:#1c1c1c;--card:#fff;--mut:#707070;--ac:#e8590c;--bd:#d9d9d4;--base:#d2d2cc;--zone:#b9b9b2;--work:#e8590c;--rest:#2b8a3e;--pause:#1c7ed6;--fig:#3d4451;--fig2:#9aa0aa;--prop:#d6d2c8;--prop2:#b4afa3;--mat:#8db4cc;--mu:var(--ac);--ms:#2b8a3e;--eye:#fff;--dbp:#2f3136;--dbh:#8a8d93;--trj:var(--ac);--p5:#2f6f3e;--p2:#24476b;--p1:#c2571a;--p05:#7c8590;--dbg2:#5b6068;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141414;--fg:#eee;--card:#222;--mut:#9a9a9a;--bd:#3a3a3a;--base:#333;--zone:#555;--fig:#d9dce1;--fig2:#7d828a;--prop:#383838;--prop2:#555;--mat:#2f5368;--eye:#222;--dbp:#e6e6e6;--dbh:#999;--ms:#51cf66;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#141414;--fg:#eee;--card:#222;--mut:#9a9a9a;--bd:#3a3a3a;--base:#333;--zone:#555;--fig:#d9dce1;--fig2:#7d828a;--prop:#383838;--prop2:#555;--mat:#2f5368;--eye:#222;--dbp:#e6e6e6;--dbh:#999;--ms:#51cf66;color-scheme:dark}
+:root{--bg:#f4f4f1;--fg:#1c1c1c;--card:#fff;--mut:#707070;--ac:#e8590c;--bd:#d9d9d4;--base:#d2d2cc;--zone:#b9b9b2;--work:#e8590c;--rest:#2b8a3e;--pause:#1c7ed6;--fig:#3d4451;--fig2:#9aa0aa;--prop:#d6d2c8;--prop2:#b4afa3;--mat:#8db4cc;--mu:var(--ac);--ms:#2b8a3e;--eye:#fff;--dbp:#2f3136;--dbh:#8a8d93;--trj:var(--ac);--p5:#2f6f3e;--p2:#24476b;--p1:#c2571a;--p05:#7c8590;--dbg2:#5b6068;--sk:#a9b4c4;--skf:#c7cfda;--cl:#3d4451;--clf:#6c7587;--sh:#232830;--shf:#4c535f;--hr:#2a2420;--ol:rgba(25,30,40,.32);--flr:#e6e3da;--grd:rgba(0,0,0,.09);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141414;--fg:#eee;--card:#222;--mut:#9a9a9a;--bd:#3a3a3a;--base:#333;--zone:#555;--fig:#d9dce1;--fig2:#7d828a;--prop:#383838;--prop2:#555;--mat:#2f5368;--eye:#222;--dbp:#e6e6e6;--dbh:#999;--ms:#51cf66;--sk:#c9d1dd;--skf:#7a8394;--cl:#6e788c;--clf:#454c5a;--sh:#e8ebf0;--shf:#9aa2b0;--hr:#5b4a3f;--ol:rgba(0,0,0,.5);--flr:#2a2a2a;--grd:rgba(255,255,255,.08);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141414;--fg:#eee;--card:#222;--mut:#9a9a9a;--bd:#3a3a3a;--base:#333;--zone:#555;--fig:#d9dce1;--fig2:#7d828a;--prop:#383838;--prop2:#555;--mat:#2f5368;--eye:#222;--dbp:#e6e6e6;--dbh:#999;--ms:#51cf66;--sk:#c9d1dd;--skf:#7a8394;--cl:#6e788c;--clf:#454c5a;--sh:#e8ebf0;--shf:#9aa2b0;--hr:#5b4a3f;--ol:rgba(0,0,0,.5);--flr:#2a2a2a;--grd:rgba(255,255,255,.08);color-scheme:dark}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}[hidden]{display:none!important}.nav{display:flex;justify-content:space-between;align-items:center;margin:8px 0}.cg{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}.cg i{font-style:normal;font-size:12px;color:var(--mut)}.cg button{padding:4px 0;min-height:48px;font-size:15px;border-radius:8px}.cg small{display:block;font-size:10px;line-height:1.2;min-height:12px}.cg .td{border-color:var(--ac)}.cg .dn{background:var(--ac);color:#fff;border-color:var(--ac)}.cg .sl{box-shadow:inset 0 0 0 2px var(--fg)}.row button.on{border-color:var(--ac);box-shadow:inset 0 0 0 2px var(--ac)}.k3{grid-template-columns:repeat(3,1fr)}.opt.k3 button{padding:10px 6px;font-size:14px;text-align:center}#tm[data-p="ÉTIRE"]{background:var(--rest)}
 body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.4 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding-block:14px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));max-width:560px;margin:auto}
@@ -37,7 +37,20 @@ summary{font-weight:600}li{margin:5px 0;font-size:14px}
 #tm[hidden]{display:none}#tm[data-p=REPOS]{background:var(--rest)}#tm[data-p=PAUSE]{background:var(--pause)}
 #tp{font-size:22px;letter-spacing:3px;font-weight:700}#tc{font-size:120px;font-weight:800;line-height:1}#tn{font-size:22px}
 #tm button{background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.4)}
-.anv{width:100%;height:auto;max-height:240px;display:block}.anv line{stroke-linecap:round}.anv .n{stroke:var(--fig)}.anv .f{stroke:var(--fig2)}.anv .nf{fill:var(--fig)}.anv .ff{fill:var(--fig2)}.anv .eye{fill:var(--eye)}.anv .mouth{fill:none;stroke:var(--eye);stroke-width:1.2;stroke-linecap:round}.anv .mu{fill:var(--mu)}.anv .ms{fill:var(--ms)}.anv .dp{fill:var(--dbp)}.anv .dh{stroke:var(--dbh)}.anv .dhc{fill:var(--dbh)}.anv .pr{fill:var(--prop)}.anv .pr2{fill:var(--prop2)}.anv .pr3{stroke:var(--prop2)}.anv .mat{fill:var(--mat)}.anv .fl{stroke:var(--prop2)}.anv .flr{fill:var(--prop);opacity:.45}.anv .gh{opacity:.13}.anv .trp{fill:none;stroke:var(--prop2);stroke-width:1.2;stroke-dasharray:4 3}.anv path.nf{stroke:var(--fig);stroke-width:.8;stroke-linejoin:round}.anvs{display:flex;gap:6px}.anvs figure{flex:1;margin:0;min-width:0}.anvs figcaption{text-align:center;font-size:11px;color:var(--mut);margin-top:2px}.anv .trj{fill:none;stroke:var(--trj);stroke-width:1.3;stroke-dasharray:3 3;opacity:.7}.anw{background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:6px 8px 8px;margin:8px 0}.anl{display:flex;align-items:center;gap:6px;font-size:14px;margin-top:4px}.anp{flex:1}button.anb{padding:3px 9px;font-size:12px;border-radius:8px}.anbar{height:3px;background:var(--bd);border-radius:2px;overflow:hidden;margin:5px 0 4px}.anbar i{display:block;height:100%;background:var(--ac);width:0}.anc{font-size:13px;color:var(--mut);min-height:18px}.anw2{font-size:12.5px;margin-top:4px}#ta{width:min(92vw,440px)}#ta .anv{max-height:30vh}#ta figcaption{color:rgba(255,255,255,.8)}#ta .anl{justify-content:center;font-size:16px}#ta .anp{flex:none}#ta .anc{color:rgba(255,255,255,.9);font-size:14px}#ta .anbar{background:rgba(255,255,255,.3)}#ta .anbar i{background:#fff}#tm{--fig:#fff;--fig2:rgba(255,255,255,.5);--prop:rgba(255,255,255,.2);--prop2:rgba(255,255,255,.38);--mat:rgba(255,255,255,.3);--mu:#ffe066;--ms:#ffe066;--eye:rgba(0,0,0,.45);--dbp:#1c1c1c;--dbh:rgba(0,0,0,.55);--trj:#fff}#tm.ha #tc{font-size:72px}#tm.ha{gap:6px;justify-content:flex-start;overflow:auto}
+.anv{width:100%;height:auto;max-height:240px;display:block;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+.anv .sk{fill:var(--sk)}.anv .skf{fill:var(--skf)}.anv .cl{fill:var(--cl)}.anv .clf{fill:var(--clf)}.anv .sh{fill:var(--sh)}.anv .shf{fill:var(--shf)}.anv .hr{fill:var(--hr)}
+.anv .sk,.anv .skf,.anv .cl,.anv .clf,.anv .sh,.anv .shf,.anv .hr{stroke:var(--ol);stroke-width:.5;stroke-linejoin:round}.anv .cn{fill:var(--cl);stroke:none}.anv .nz{fill:var(--skf);stroke:var(--ol);stroke-width:.4}
+.anv .eye{fill:var(--eye)}.anv .mouth{fill:none;stroke:var(--eye);stroke-width:1.1;stroke-linecap:round}
+.anv .mu{fill:var(--mu)}.anv .ms{fill:var(--ms)}.anv .dp{fill:var(--dbp)}.anv .dh{stroke:var(--dbh)}
+.anv .pr{fill:var(--prop)}.anv .pr2{fill:var(--prop2)}.anv .mat{fill:var(--mat)}.anv .flr{fill:var(--flr)}.anv .pr,.anv .pr2,.anv .mat,.anv .flr{stroke:var(--ol);stroke-width:.4;stroke-linejoin:round}
+.anv .sd{fill:#000;opacity:.17;stroke:none}.anv .hl{fill:#fff;opacity:.2;stroke:none}.anv .fwd{fill:var(--ac);opacity:.75;stroke:none}.anv .grd{fill:none;stroke:var(--grd);stroke-width:.6}
+.anv .shd{opacity:.2}.anv .shd ellipse{fill:#000}.anv .gh{opacity:.13}.anv .trj{fill:none;stroke:var(--trj);stroke-width:1.3;stroke-dasharray:3 3;opacity:.7}
+.anvs{display:flex;gap:6px}.anvs.wd{flex-direction:column}.anvs figure,.bgv figure{flex:1;margin:0;min-width:0}.anvs figcaption,.bgv figcaption{text-align:center;font-size:11px;color:var(--mut);margin-top:2px}
+.anh{font-size:11.5px;color:var(--mut);text-align:center;margin-top:4px}.chs{display:flex;gap:6px;flex-wrap:wrap}button.anb.on{border-color:var(--ac);box-shadow:inset 0 0 0 1px var(--ac)}
+#insp{position:fixed;inset:0;z-index:15;background:var(--bg);color:var(--fg);display:flex;flex-direction:column;gap:8px;padding:max(10px,env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) max(12px,env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px))}
+#insp .ih{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:17px}#insp .ib{flex:1;min-height:0;display:flex;flex-direction:column;gap:6px;overflow:auto}
+.bgv{flex:1;min-height:260px;display:flex;background:var(--card);border:1px solid var(--bd);border-radius:12px;overflow:hidden}.bgv figure{display:flex;flex-direction:column}.bgv .anv{flex:1 1 0;min-height:0;max-height:none;height:100%}
+.anw{background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:6px 8px 8px;margin:8px 0}.anl{display:flex;align-items:center;gap:6px;font-size:14px;margin-top:4px}.anp{flex:1}button.anb{padding:3px 9px;font-size:12px;border-radius:8px}.anbar{height:3px;background:var(--bd);border-radius:2px;overflow:hidden;margin:5px 0 4px}.anbar i{display:block;height:100%;background:var(--ac);width:0}.anc{font-size:13px;color:var(--mut);min-height:18px}.anw2{font-size:12.5px;margin-top:4px}#ta{width:min(92vw,440px)}#ta .anv{max-height:30vh}#ta figcaption{color:rgba(255,255,255,.8)}#ta .anl{justify-content:center;font-size:16px}#ta .anp{flex:none}#ta .anc{color:rgba(255,255,255,.9);font-size:14px}#ta .anbar{background:rgba(255,255,255,.3)}#ta .anbar i{background:#fff}#tm{--sk:#fff;--skf:rgba(255,255,255,.55);--cl:#e9edf5;--clf:rgba(233,237,245,.55);--sh:rgba(0,0,0,.5);--shf:rgba(0,0,0,.3);--hr:rgba(0,0,0,.45);--ol:rgba(0,0,0,.22);--flr:rgba(255,255,255,.16);--grd:rgba(255,255,255,.22);--fig:#fff;--fig2:rgba(255,255,255,.5);--prop:rgba(255,255,255,.2);--prop2:rgba(255,255,255,.38);--mat:rgba(255,255,255,.3);--mu:#ffe066;--ms:#ffe066;--eye:rgba(0,0,0,.45);--dbp:#1c1c1c;--dbh:rgba(0,0,0,.55);--trj:#fff}#tm.ha #tc{font-size:72px}#tm.ha{gap:6px;justify-content:flex-start;overflow:auto}
 </style></head><body>
 <div id="nojs" class="c"><b>⚠️ Cette visionneuse bloque le JavaScript de l'appli.</b><p>C'est le cas de Chrome sur Android pour les fichiers ouverts depuis le téléphone. Ouvre l'appli en ligne dans Chrome :<br><a href="https://claude.ai/artifact/3yPMYKWJUhHGBQocS52X2f">claude.ai/artifact/3yPMYKWJUhHGBQocS52X2f</a></p></div>
 <script>document.getElementById('nojs').remove()</script>
@@ -134,7 +147,7 @@ function prep(X){if(X.K)return X;const F=X.v=='f';
   if(P.F==null&&P.f!=null)P.F=P.f;return P});
  const ks=new Set();X.K.forEach(k=>Object.keys(k).forEach(n=>ks.add(n)));
  ks.forEach(n=>{const d=X.K.find(k=>k[n]!=null);X.K.forEach(k=>{if(k[n]==null)k[n]=d[n]})});
- X.T=X.p.reduce((s,p)=>s+p[0],0);X.db=X.db||{};X.md=X.nf?'t':X.v=='f'?'f':'s';X.V=['s',X.nf?'t':'f'];return X}
+ X.T=X.p.reduce((s,p)=>s+p[0],0);X.db=X.db||{};X.md=X.nf?'t':X.v=='f'?'f':'s';X.V=['pro',X.nf?'top':'fac'];return X}
 function at(X,t){let x=((t%X.T)+X.T)%X.T,i=0;while(i<X.p.length-1&&x>X.p[i][0]){x-=X.p[i][0];i++}
  const u=Math.min(1,x/X.p[i][0]),e=(1-Math.cos(Math.PI*u))/2,A=X.K[i],B=X.K[(i+1)%X.K.length],P={};
  for(const k in A)P[k]=mix(A[k],B[k],e);
@@ -156,8 +169,6 @@ function lift(J,P,X){const md=X.md,Z=X.z||{},B=nv(X.base,-57),p={};
    const base=nv(Z[n],md=='s'?nv(Z[g],LAT[g])*sg:0);p[n]=m(J[n],base+acc*sg)}}
  const u=mv(dr(P.t)),lat=md=='s'?[0,0,1]:mv(dr(P.t-90)),nf=md=='s'?mv(dr(P.t-90)):md=='f'?[1,0,0]:[0,-1,0],ax=md=='s'?[0,0,1]:md=='f'?[1,0,0]:[0,-1,0];
  return{p,u,lat,nf,ax,face:md=='s'?mv(dr(P.t+P.n-90)):nf,hu:mv(dr(P.t+P.n)),ln:a=>md=='s'?mv(dr(a+90)):ax,mv}}
-const CAM={s:{p:q=>[q[0],q[1]],d:q=>q[2],v:[0,0,1]},f:{p:q=>[q[2],q[1]],d:q=>q[0],v:[1,0,0]},t:{p:q=>[q[0],-q[2]],d:q=>-q[1],v:[0,-1,0]}},
-VN={s:'Profil',f:'Face',t:'Face · vue du dessus'};
 // ---------- dessin ----------
 const L=(p,q,w,c)=>`<line x1="${r1(p[0])}" y1="${r1(p[1])}" x2="${r1(q[0])}" y2="${r1(q[1])}" stroke-width="${w}" class="${c}"/>`,
 C=(p,r,c,x='')=>`<circle cx="${r1(p[0])}" cy="${r1(p[1])}" r="${r1(r)}" class="${c}"${x}/>`,
@@ -195,26 +206,6 @@ function bellAt(Q,P,X,k,cam,it){const B=X.db,p=Q.p;let h,a;
  else{h=B.h=='c'?p.ah.map((v,i)=>(v+p.Ah[i])/2):p[k+'h'];const fa=Q.J[(B.h=='c'?'a':k)+'f'],w=B.h=='c'?nv(B.w,1):nv(k=='A'?P.W:P.w,nv(B.w,0));
   a=B.o=='a'?Q.mv(dr(fa)):B.o=='t'?Q.u:nrm(add3(Q.ax.map(v=>v*(1-w)),Q.mv(dr(fa+90)),w))}
  it.push({d:cam.d(h)+(B.h=='ft'?40:.5),s:dumb(h,a,P.ds,cam)})}
-function fig(Q,P,X,cam,ef,g){const p=Q.p,J=Q.J,it=[],pj=n=>cam.p(p[n]),dp=n=>cam.d(p[n]),hd=dp('hp');
- const cls=k=>cam==CAM.s&&cam.d(p[k+(k=='a'||k=='A'?'s':'h')])<hd-6?'f':'n';
- for(const k of'Ll'){const c=cls(k);it.push({d:(dp(k+'h')+dp(k+'k'))/2,s:L(pj(k+'h'),pj(k+'k'),15,c)+(g?'':limbMus(Q,X,cam,'U',k,ef))},
-  {d:(dp(k+'k')+dp(k+'a'))/2,s:L(pj(k+'k'),pj(k+'a'),11.5,c)+(g?'':limbMus(Q,X,cam,'S',k,ef))},{d:(dp(k+'a')+dp(k+'t'))/2,s:L(pj(k+'a'),pj(k+'t'),6.5,c)})}
- // tronc
- {const sec=TS.map(q=>{const c=add3(add3(p.hp,Q.u,K.to*q[0]),Q.nf,(q[1]-q[2])/2),dd=(q[1]+q[2])/2,pts=[];
-   for(let i=0;i<16;i++){const t=i/16*2*Math.PI;pts.push(cam.p(add3(add3(c,Q.nf,Math.cos(t)*dd),Q.lat,Math.sin(t)*q[3])))}return pts});
-  let s='';for(let i=0;i<sec.length-1;i++)s+=PG(hull(sec[i].concat(sec[i+1])),'nf');
-  it.push({d:(dp('hp')+dp('nb'))/2,s:s+(g?'':torsoMus(Q,X,cam,ef))})}
- for(const k of'Aa'){const c=cls(k);
-  it.push({d:(dp(k+'s')+dp(k+'e'))/2,s:L(pj(k+'s'),pj(k+'e'),10,c)+(g?'':limbMus(Q,X,cam,'u',k,ef))},{d:(dp(k+'e')+dp(k+'w'))/2,s:L(pj(k+'e'),pj(k+'w'),8,c)+(g?'':limbMus(Q,X,cam,'f',k,ef))},{d:dp(k+'h'),s:C(pj(k+'h'),4.6,c+'f')});
-  if(!g&&X.db.h&&X.db.h.includes(k)&&X.db.h!='c'&&X.db.h!='hip')bellAt(Q,P,X,k,cam,it)}
- if(!g&&(X.db.h=='c'||X.db.h=='hip'||X.db.h=='ft'))bellAt(Q,P,X,'a',cam,it);
- // tête
- {const h=pj('hd');let s=L(pj('nb'),h,8,'n')+C(h,K.hr,'nf');
-  if(!g){const fd=dot(Q.face,cam.v),f2=cam.p(add3(p.hd,Q.face,1)),u2=cam.p(add3(p.hd,Q.hu,1));let fx=f2[0]-h[0],fy=f2[1]-h[1],ux=u2[0]-h[0],uy=u2[1]-h[1];const ul=Math.hypot(ux,uy)||1;ux/=ul;uy/=ul;
-   if(fd>.55){const P2=(a,b)=>[h[0]+ux*a-uy*b,h[1]+uy*a+ux*b];s+=C(P2(2,3.6),1.4,'eye')+C(P2(2,-3.6),1.4,'eye')+`<path d="M${P2(-4.5,-3).map(r1).join(' ')}Q${P2(-6.5,0).map(r1).join(' ')} ${P2(-4.5,3).map(r1).join(' ')}" class="mouth"/>`}
-   else if(fd>-.55){const fl=Math.hypot(fx,fy)||1;fx/=fl;fy/=fl;s+=C([h[0]+fx*(K.hr-.5),h[1]+fy*(K.hr-.5)],2.4,'nf')+C([h[0]+fx*5.5+ux*2.5,h[1]+fy*5.5+uy*2.5],1.4,'eye')+E([h[0]-fx*1.5,h[1]-fy*1.5],ag(ux,uy),3,2.2,'ff')}}
-  it.push({d:dp('hd'),s})}
- it.sort((a,b)=>a.d-b.d);return it.map(i=>i.s).join('')}
 // ---------- accessoires (boîtes 3D) ----------
 function boxes(q,X){const b=(x0,x1,y0,y1,z0,z1,c,r=1.5)=>({x0,x1,y0,y1,z0,z1,c,r}),o=[];
  const chair=(x,bl,z0=-22,z1=22)=>{const bx=bl?x-4:x+40;o.push(b(bx,bx+4,-92,-46,z0,z1,'pr2'),b(x,x+40,-46,-41,z0,z1,'pr'));for(const xx of[x+1,x+35.5])for(const zz of[z0+1,z1-4.5])o.push(b(xx,xx+3.5,-42,0,zz,zz+3.5,'pr2'))};
@@ -224,48 +215,163 @@ function boxes(q,X){const b=(x0,x1,y0,y1,z0,z1,c,r=1.5)=>({x0,x1,y0,y1,z0,z1,c,r
   case'matt':o.push(b(q.x0,q.x1,-2.5,0,-q.y1,-q.y0,'mat',4));break;
   case'chair':chair(q.x,q.b=='l');break;case'chairf':chair(-12,1);break;
   case'bed':bed(q.x0,q.x1,q.h||48,nv(q.z0,-45),nv(q.z1,45),q.p);break;case'bedt':bed(q.x0,q.x1,48,-q.y1,-q.y0,'l');break;
-  case'wall':o.push(b(q.s=='l'?q.x-9:q.x,q.s=='l'?q.x:q.x+9,-215,0,-75,75,'pr',0))}return o}
-function rect(B,cam){if(cam==CAM.s)return[B.x0,B.y0,B.x1,B.y1];if(cam==CAM.f)return[B.z0,B.y0,B.z1,B.y1];return[B.x0,-B.z1,B.x1,-B.z0]}
-function props(X,cam,hd,front){let s='';for(const q of X.pr||[]){const bx=boxes(q,X),c=[0,1,2].map(i=>bx.reduce((a,B)=>a+[B.x0+B.x1,B.y0+B.y1,B.z0+B.z1][i]/2,0)/bx.length),fr=cam.d(c)>hd+12&&q.c!='mat'&&q.c!='matt';
-  if(fr!=front)continue;for(const B of bx){const r=rect(B,cam);s+=`<rect x="${r1(r[0])}" y="${r1(r[1])}" width="${r1(r[2]-r[0])}" height="${r1(r[3]-r[1])}" rx="${B.r}" class="${B.c}${fr?' trp':''}"/>`}}return s}
-// ---------- cadrage, trajectoire, fantômes (calculés une fois par exercice et par vue) ----------
-function pose3(X,t){const r=at(X,t),J=solve(r.P,X),Q=lift(J,r.P,X);Q.J=J;return Object.assign({},r,{Q})}
-function stat(X){if(X.S)return X.S;X.S={};const fr=[];for(let i=0;i<40;i++)fr.push(pose3(X,X.T*i/40).Q);
- for(const v of X.V){const cam=CAM[v],top=v=='t';let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;const B=(x,y,r=0)=>{x0=Math.min(x0,x-r);x1=Math.max(x1,x+r);y0=Math.min(y0,y-r);y1=Math.max(y1,y+r)};
-  for(const Q of fr)for(const n in Q.p){const q=cam.p(Q.p[n]);B(q[0],q[1],n=='hd'?K.hr+1:9)}
-  for(const q of X.pr||[])for(const b of boxes(q,X)){if(b.c=='pr'&&b.y0<-150)continue;const r=rect(b,cam);B(r[0],r[1]);B(r[2],r[3])}
-  if(!top){B(x0,6);if(x1-x0<110){const c=(x0+x1)/2;x0=c-55;x1=c+55}}
-  const px=10;x0-=px;x1+=px;y0-=px;y1+=top?px:2;X.S[v]={b:[x0,y0,x1,y1]}}
- const H=Math.max(...X.V.map(v=>X.S[v].b[3]-X.S[v].b[1])),Y1=Math.max(...X.V.filter(v=>v!='t').map(v=>X.S[v].b[3]));
- for(const v of X.V){const cam=CAM[v],top=v=='t',[x0,b0,x1,b1]=X.S[v].b,y0=top?(b0+b1-H)/2:Y1-H,y1=top?y0+H:Y1;
-  const hd=cam.d(fr[0].p.hp);let s=top?'':`<rect x="${r1(x0)}" y="0" width="${r1(x1-x0)}" height="${r1(y1)}" class="flr"/>`+L([x0,0],[x1,0],1.2,'fl');
-  s+=props(X,cam,hd,false);
-  for(const i of X.g||[0,1]){const P=X.K[i],J=solve(P,X),Q=lift(J,P,X);Q.J=J;s+=`<g class="gh">${fig(Q,P,X,cam,0,1)}</g>`}
-  if(X.tr){let d='';for(let i=0;i<=60;i++){const q=cam.p(pose3(X,X.T*i/60).Q.p[X.tr]);d+=(i?'L':'M')+r1(q[0])+' '+r1(q[1])}s+=`<path d="${d}" class="trj"/>`}
-  X.S[v]={vb:[r1(x0),r1(y0),r1(x1-x0),r1(y1-y0)],s,fs:props(X,cam,hd,true)}}
- return X.S}
+  case'wall':o.push(b(q.s=='l'?q.x-9:q.x,q.s=='l'?q.x:q.x+9,-215,0,-50,50,'pr',0))}return o}
+// ---------- caméra orbitale (x avant, y bas, z côté) : la vue tourne autour du centre c du mouvement ----------
+function mkcam(yaw,pitch,c){const a=yaw*R,b=pitch*R,ca=Math.cos(a),sa=Math.sin(a),cb=Math.cos(b),sb=Math.sin(b),
+ r=[ca,0,-sa],v=[sa*cb,-sb,ca*cb],dn=[sa*sb,cb,ca*sb];
+ return{yaw:yaw,pitch:pitch,r:r,dn:dn,v:v,
+  p:q=>{const x=q[0]-c[0],y=q[1]-c[1],z=q[2]-c[2];return[x*r[0]+z*r[2],x*dn[0]+y*dn[1]+z*dn[2]]},
+  d:q=>(q[0]-c[0])*v[0]+(q[1]-c[1])*v[1]+(q[2]-c[2])*v[2]}}
+const PRE={pro:[0,0,'Profil'],fac:[90,0,'Face'],tq:[40,14,'3/4'],dos:[270,0,'Dos'],top:[0,90,'Dessus']};
+function vname(yaw,pitch){if(pitch>55)return'Dessus';if(pitch<-4)return'Dessous';const y=((yaw%360)+360)%360,n=a=>Math.min(Math.abs(y-a),360-Math.abs(y-a));
+ return n(0)<24||n(180)<24?'Profil':n(90)<24?'Face':n(270)<24?'Dos':'3/4'}
+// ---------- mannequin ----------
+const lerp2=(a,b,t)=>[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t];
+// capsule effilée (rayon ra en a, rb en b)
+function cap(a,b,ra,rb,c){const dx=b[0]-a[0],dy=b[1]-a[1],l=Math.hypot(dx,dy);if(l<.6)return C(a,Math.max(ra,rb),c);
+ const nx=-dy/l,ny=dx/l,f=q=>r1(q[0])+' '+r1(q[1]);
+ return`<path d="M${f([a[0]+nx*ra,a[1]+ny*ra])}L${f([b[0]+nx*rb,b[1]+ny*rb])}A${r1(rb)} ${r1(rb)} 0 0 0 ${f([b[0]-nx*rb,b[1]-ny*rb])}L${f([a[0]-nx*ra,a[1]-ny*ra])}A${r1(ra)} ${r1(ra)} 0 0 0 ${f([a[0]+nx*ra,a[1]+ny*ra])}Z" class="${c}"/>`}
+// tête : crâne, cheveux, oreilles, nez, yeux et bouche placés sur la sphère selon l'angle de vue
+function head(Q,cam,g){const p=Q.p,hd=p.hd,h=cam.p(hd),R0=K.hr,hu=nrm(Q.hu),fc=nrm(Q.face),lt=nrm(crs(hu,fc)),V=cam.v,
+ dv=d=>dot(d,V),pt=(dir,r)=>cam.p(add3(hd,dir,r)),fd=dv(fc);
+ let s=cap(cam.p(p.nb),h,3.9,3.7,'sk');
+ if(g)return s+C(h,R0,'sk');
+ if(fd<-.35)return s+C(h,R0,'sk')+C(cam.p(add3(hd,hu,.3)),R0+.1,'hr');
+ s+=C(cam.p(add3(add3(hd,hu,.9),fc,-.9)),R0+.2,'hr')+C(cam.p(add3(add3(hd,hu,-.6),fc,.6)),R0-.4,'sk');
+ [1,-1].forEach(sg=>{const d=lt.map(x=>x*sg);if(dv(d)>.1)s+=C(pt(d,R0*.97),2.3,'sk')});
+ const nd=nrm(add3(fc,hu,-.12));if(dv(nd)>-.1)s+=C(pt(nd,R0+1.3),2.1*(.55+.45*Math.max(0,dv(nd))),'nz');
+ [1,-1].forEach(sg=>{const d=nrm(add3(add3(fc.map(x=>x*.88),lt,sg*.36),hu,.14)),k=dv(d);if(k>.12)s+=C(pt(d,R0*.98),1.5*(.45+.55*k),'eye')});
+ const md=nrm(add3(fc,hu,-.42));if(dv(md)>.25){const m=add3(hd,md,R0*.98),a=cam.p(add3(m,lt,2.6)),b=cam.p(add3(m,lt,-2.6));s+=`<path d="M${r1(a[0])} ${r1(a[1])}L${r1(b[0])} ${r1(b[1])}" class="mouth"/>`}
+ return s}
+function fig(Q,P,X,cam,ef,g){const p=Q.p,it=[],pj=n=>cam.p(p[n]),dp=n=>cam.d(p[n]),d0=dp('hp'),
+ fs=k=>dp(k+(k=='a'||k=='A'?'s':'h'))<d0-6?'f':'';
+ for(const k of'Ll'){const f=fs(k),h=pj(k+'h'),kn=pj(k+'k'),an=pj(k+'a'),t=pj(k+'t');
+  it.push({d:(dp(k+'h')+dp(k+'k'))/2,s:cap(h,kn,8.2,5.6,'sk'+f)+cap(h,lerp2(h,kn,.5),8.6,6.9,'cl'+f)+(g?'':limbMus(Q,X,cam,'U',k,ef))},
+   {d:(dp(k+'k')+dp(k+'a'))/2,s:cap(kn,an,5.2,3.6,'sk'+f)+(g?'':limbMus(Q,X,cam,'S',k,ef))},
+   {d:(dp(k+'a')+dp(k+'t'))/2,s:cap(an,t,3.9,3,'sh'+f)})}
+ {const sec=TS.map(q=>{const c=add3(add3(p.hp,Q.u,K.to*q[0]),Q.nf,(q[1]-q[2])/2),dd=(q[1]+q[2])/2,pts=[];
+   for(let i=0;i<16;i++){const t=i/16*2*Math.PI;pts.push(cam.p(add3(add3(c,Q.nf,Math.cos(t)*dd),Q.lat,Math.sin(t)*q[3])))}return pts});
+  const hs=[];for(let i=0;i<sec.length-1;i++)hs.push(hull(sec[i].concat(sec[i+1])));let s=hs.map(h=>PG(h,'cl')).join('')+hs.map(h=>PG(h,'cn')).join('');
+  it.push({d:(dp('hp')+dp('nb'))/2,s:s+(g?'':torsoMus(Q,X,cam,ef))})}
+ for(const k of'Aa'){const f=fs(k),s=pj(k+'s'),e=pj(k+'e'),w=pj(k+'w'),h=pj(k+'h');
+  it.push({d:(dp(k+'s')+dp(k+'e'))/2,s:cap(s,e,5.1,3.9,'sk'+f)+cap(s,lerp2(s,e,.42),5.7,4.8,'cl'+f)+C(s,5.5,'cl'+f)+(g?'':limbMus(Q,X,cam,'u',k,ef))},
+   {d:(dp(k+'e')+dp(k+'w'))/2,s:cap(e,w,3.7,2.9,'sk'+f)+(g?'':limbMus(Q,X,cam,'f',k,ef))},{d:dp(k+'h'),s:C(h,3.9,'sk'+f)});
+  if(!g&&X.db.h&&X.db.h.includes(k)&&X.db.h!='c'&&X.db.h!='hip')bellAt(Q,P,X,k,cam,it)}
+ if(!g&&(X.db.h=='c'||X.db.h=='hip'||X.db.h=='ft'))bellAt(Q,P,X,'a',cam,it);
+ it.push({d:dp('hd')+.5,s:head(Q,cam,g)});
+ it.sort((a,b)=>a.d-b.d);return it.map(i=>i.s).join('')}
+// ombre portée sur le sol : un seul voile uniforme sous le corps
+function shadow(Q,cam){const p=Q.p,sb=Math.max(.07,Math.sin(Math.abs(cam.pitch)*R));let s='';
+ [['hp',11],['nb',9],['hd',10],['lk',6],['Lk',6],['la',5],['La',5],['lt',4],['Lt',4],['ae',4],['Ae',4],['ah',4.5],['Ah',4.5]].forEach(a=>{const q=p[a[0]];if(!q)return;const c=cam.p([q[0],0,q[2]]);
+  s+=`<ellipse cx="${r1(c[0])}" cy="${r1(c[1])}" rx="${a[1]*1.15}" ry="${r1(a[1]*1.15*sb)}"/>`});
+ return`<g class="shd">${s}</g>`}
+// ---------- accessoires et sol en boîtes 3D, faces ombrées selon la lumière ----------
+const LW=nrm([-.35,-.85,.4]);
+function faces(B){const x0=B.x0,x1=B.x1,y0=B.y0,y1=B.y1,z0=B.z0,z1=B.z1;
+ return[{n:[1,0,0],q:[[x1,y0,z0],[x1,y0,z1],[x1,y1,z1],[x1,y1,z0]]},{n:[-1,0,0],q:[[x0,y0,z0],[x0,y1,z0],[x0,y1,z1],[x0,y0,z1]]},
+  {n:[0,1,0],q:[[x0,y1,z0],[x1,y1,z0],[x1,y1,z1],[x0,y1,z1]]},{n:[0,-1,0],q:[[x0,y0,z0],[x0,y0,z1],[x1,y0,z1],[x1,y0,z0]]},
+  {n:[0,0,1],q:[[x0,y0,z1],[x0,y1,z1],[x1,y1,z1],[x1,y0,z1]]},{n:[0,0,-1],q:[[x0,y0,z0],[x1,y0,z0],[x1,y1,z0],[x0,y1,z0]]}]}
+function boxSvg(B,cam){let s='';faces(B).forEach(f=>{if(dot(f.n,cam.v)<=.02)return;const pts=f.q.map(cam.p),l=dot(f.n,LW);
+  s+=PG(pts,B.c)+(l>.5?PG(pts,'hl'):l<.05?PG(pts,'sd'):'')});return s}
+const bctr=B=>[(B.x0+B.x1)/2,(B.y0+B.y1)/2,(B.z0+B.z1)/2];
+function props(X,cam,hdD,front){let s='';(X.pr||[]).forEach(q=>{const bx=boxes(q,X),c=[0,1,2].map(i=>bx.reduce((a,B)=>a+bctr(B)[i],0)/bx.length),fr=cam.d(c)>hdD+12&&q.c!='mat'&&q.c!='matt';
+  if(fr!=front)return;bx.sort((a,b)=>cam.d(bctr(a))-cam.d(bctr(b)));s+=`<g${fr?' opacity=".3"':''}>${bx.map(B=>boxSvg(B,cam)).join('')}</g>`});return s}
+function floor(F,cam){const cx=F.c[0],cz=F.c[2],Rf=F.rf,N=64,top=[],bot=[],at=(r,t)=>cam.p([cx+r*Math.cos(t),0,cz+r*Math.sin(t)]);
+ for(let i=0;i<N;i++){const t=i/N*2*Math.PI;top.push(at(Rf,t));bot.push(cam.p([cx+Rf*Math.cos(t),5,cz+Rf*Math.sin(t)]))}
+ const sd=hull(top.concat(bot));let s=PG(sd,'flr')+PG(sd,'sd')+PG(top,'flr');
+ if(cam.pitch>3){let d='';[.5,.75].forEach(k=>{for(let i=0;i<=N;i++){const q=at(Rf*k,i/N*2*Math.PI);d+=(i?'L':'M')+r1(q[0])+' '+r1(q[1])}});
+  for(let i=0;i<12;i++){const t=i*Math.PI/6,a=at(Rf*.12,t),b=at(Rf,t);d+=`M${r1(a[0])} ${r1(a[1])}L${r1(b[0])} ${r1(b[1])}`}
+  s+=`<path d="${d}" class="grd"/>`;
+  const f=[[.97,0],[.83,-.07],[.83,.07]].map(q=>cam.p([cx+Rf*q[0],0,cz+Rf*q[1]*1.3]));s+=PG(f,'fwd')}
+ return s}
+// ---------- cadrage : centre de rotation et étendue d'écran valables sous tous les angles ----------
+function pose3(X,t){const r=at(X,t),J=solve(r.P,X),Q=lift(J,r.P,X);Q.J=J;return Object.assign({},r,{Q:Q})}
+function fit(X){if(X.F)return X.F;const fr=[];for(let i=0;i<40;i++)fr.push(pose3(X,X.T*i/40).Q);
+ const lo=[1e9,1e9,1e9],hi=[-1e9,-1e9,-1e9],pts=[];
+ fr.forEach(Q=>{for(const n in Q.p){const q=Q.p[n];for(let k=0;k<3;k++){lo[k]=Math.min(lo[k],q[k]);hi[k]=Math.max(hi[k],q[k])}pts.push([q,n=='hd'?K.hr+2:9])}});
+ const c=[0,1,2].map(k=>(lo[k]+hi[k])/2);
+ let rf=70;pts.forEach(a=>{rf=Math.max(rf,Math.hypot(a[0][0]-c[0],a[0][2]-c[2])+16)});
+ (X.pr||[]).forEach(q=>boxes(q,X).forEach(b=>{[b.x0,b.x1].forEach(x=>[b.z0,b.z1].forEach(z=>{rf=Math.max(rf,Math.hypot(x-c[0],z-c[2])+10)}));
+  if(b.c=='pr'&&b.y0<-150)return;[b.x0,b.x1].forEach(x=>[b.y0,b.y1].forEach(y=>[b.z0,b.z1].forEach(z=>pts.push([[x,y,z],0]))))}));
+ rf=Math.min(rf,190);[[1,0],[-1,0],[0,1],[0,-1]].forEach(d=>pts.push([[c[0]+rf*d[0],2,c[2]+rf*d[1]],0]));
+ let hw=40,hh=40;for(let yaw=0;yaw<360;yaw+=30)[0,22].forEach(pt=>{const cam=mkcam(yaw,pt,c);pts.forEach(a=>{const s=cam.p(a[0]);hw=Math.max(hw,Math.abs(s[0])+a[1]);hh=Math.max(hh,Math.abs(s[1])+a[1])})});
+ hw=Math.max(hw,rf+6)+4;hh+=6;X.F={c:c,hw:hw,hh:hh,rf:rf,half:Math.max(hw,hh),hip:fr[0].p.hp};return X.F}
+// ---------- couche fixe d'une vue (sol, accessoires, fantômes, trajectoire), refaite seulement quand la caméra bouge ----------
+function build(p,V){const X=p.X,F=X.F,cam=mkcam(V.yaw,V.pitch,F.c),hdD=cam.d(F.hip);V.cam=cam;
+ let s=props(X,cam,hdD,false);
+ if(!X.gq){X.gq=(X.g||[0,1]).map(i=>{const P=X.K[i],J=solve(P,X),Q=lift(J,P,X);Q.J=J;return[Q,P]});X.tj=X.tr?Array.from({length:61},(_,i)=>pose3(X,X.T*i/60).Q.p[X.tr]):null}
+ X.gq.forEach(g=>{s+=`<g class="gh">${fig(g[0],g[1],X,cam,0,1)}</g>`});
+ if(X.tj){let d='';X.tj.forEach((p3,i)=>{const q=cam.p(p3);d+=(i?'L':'M')+r1(q[0])+' '+r1(q[1])});s+=`<path d="${d}" class="trj"/>`}
+ V.gF.innerHTML=floor(F,cam);V.gB.innerHTML=s;V.gT.innerHTML=props(X,cam,hdD,true);
+ const bw=p.big?F.half:F.hw,bh=p.big?F.half:F.hh,z=V.z;V.bw=bw;V.bh=bh;
+ V.svg.setAttribute('viewBox',r1(-bw/z+V.px)+' '+r1(-bh/z+V.py)+' '+r1(2*bw/z)+' '+r1(2*bh/z));
+ const n=vname(V.yaw,V.pitch);if(V.cap&&V.cn!==n){V.cn=n;V.cap.textContent=n}V.dirty=false}
 // ---------- lecteurs ----------
-const PL=new Set();let last=0,run=0;
+const PL=new Set();let last=0,run=0,INS=null;
 const io='IntersectionObserver'in window?new IntersectionObserver(es=>es.forEach(e=>{const p=e.target._an;if(p)p.vis=e.isIntersecting})):null;
-function frame(p){const X=p.X,{P,i,u,ef,Q}=pose3(X,p.t),ph=X.p[i];
- X.V.forEach((v,j)=>{p.g[j].innerHTML=fig(Q,P,X,CAM[v],ef,0)+X.S[v].fs});
- if(i!=p.li){p.li=i;p.lp.textContent=ph[1];p.lc.textContent=ph[2]||''}p.bar.style.width=r1(u*100)+'%'}
+function frame(p){const X=p.X,r=pose3(X,p.t),P=r.P,Q=r.Q,ph=X.p[r.i];
+ p.views.forEach(V=>{if(V.dirty)build(p,V);V.gS.innerHTML=shadow(Q,V.cam);V.gD.innerHTML=fig(Q,P,X,V.cam,r.ef,0)});
+ if(r.i!=p.li){p.li=r.i;p.lp.textContent=ph[1];p.lc.textContent=ph[2]||''}p.bar.style.width=r1(r.u*100)+'%'}
 function loop(ts){const dt=Math.min(.1,(ts-(last||ts))/1000);last=ts;
- for(const p of PL){if(!p.el.isConnected){PL.delete(p);io&&io.unobserve(p.el);continue}if(p.vis&&!p.ps){p.t+=dt*p.sp;frame(p)}}
+ PL.forEach(p=>{if(!p.el.isConnected){PL.delete(p);io&&io.unobserve(p.el);return}if(INS&&p!==INS.p)return;
+  p.views.forEach(V=>{if(V.tw){const w=V.tw;w.t+=dt/.35;const e=w.t>=1?1:(1-Math.cos(Math.PI*w.t))/2,dy=((w.b[0]-w.a[0]+540)%360)-180;
+   V.yaw=(w.a[0]+dy*e+360)%360;V.pitch=w.a[1]+(w.b[1]-w.a[1])*e;V.z=w.a[2]+(w.b[2]-w.a[2])*e;V.px=w.a[3]*(1-e);V.py=w.a[4]*(1-e);V.dirty=true;if(w.t>=1)V.tw=null}});
+  if(p.auto&&p.views[0]){const V=p.views[0];V.yaw=(V.yaw+dt*28)%360;V.dirty=true}
+  if(p.vis&&!p.ps){p.t+=dt*p.sp;frame(p)}else if(p.views.some(V=>V.dirty))frame(p)});
  if(PL.size)requestAnimationFrame(loop);else run=0}
 function stop(el){if(el._an){PL.delete(el._an);io&&io.unobserve(el);el._an=null}el.innerHTML=''}
-function mount(el,name,o={}){stop(el);const X=A[name];if(!X){el.hidden=true;return null}prep(X);const S=stat(X);el.hidden=false;
- const sv=X.V.map(v=>{const[x0,,w]=S[v].vb,mir=o.mirror?` transform="translate(${r1(2*x0+w)} 0) scale(-1 1)"`:'';
-  return`<figure style="flex:${w} 1 0"><svg class="anv" viewBox="${S[v].vb.join(' ')}" role="img" aria-label="${name} : ${VN[v]}"><g${mir}>${S[v].s}<g></g></g></svg><figcaption>${VN[v]}</figcaption></figure>`}).join('');
- el.innerHTML=`<div class="anvs">${sv}</div><div class="anl"><b class="anp"></b>${o.mini?'':`<button class="anb" data-ap>⏸</button><button class="anb" data-as>0,5×</button>`}</div><div class="anbar"><i></i></div><div class="anc"></div>${!o.mini&&X.w?`<div class="anw2">⚠️ ${X.w}</div>`:''}`;
- const p={el,X,t:0,sp:1,ps:false,vis:!io,li:-1,g:[...el.querySelectorAll('svg>g>g:last-child')],lp:el.querySelector('.anp'),lc:el.querySelector('.anc'),bar:el.querySelector('.anbar i')};
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+function touch(p){if(p.ps||!PL.has(p))frame(p)}
+function goTo(p,V,s){V.tw={a:[V.yaw,V.pitch,V.z,V.px,V.py],b:[s[0],s[1],1,0,0],t:0};touch(p)}
+// gestes : un doigt tourne (horizontal ; vertical aussi en plein écran), deux doigts zooment et déplacent, double tap recentre
+function gest(p,V){const svg=V.svg,pts={},big=p.big;let moved=0,tapT=0;
+ svg.style.touchAction=big?'none':'pan-y';svg.style.cursor='grab';
+ const ids=()=>Object.keys(pts),
+ geo=()=>{const r=svg.getBoundingClientRect(),w=2*V.bw/V.z,h=2*V.bh/V.z,s=Math.min(r.width/w,r.height/h);return{r:r,s:s,ox:(r.width-w*s)/2,oy:(r.height-h*s)/2,x:-V.bw/V.z+V.px,y:-V.bh/V.z+V.py}},
+ toVB=(m)=>{const g=geo();return[g.x+(m[0]-g.r.left-g.ox)/g.s,g.y+(m[1]-g.r.top-g.oy)/g.s]},
+ place=(m,w)=>{const g=geo(),x=w[0]-(m[0]-g.r.left-g.ox)/g.s,y=w[1]-(m[1]-g.r.top-g.oy)/g.s;V.px=clamp(x+V.bw/V.z,-V.bw*1.6,V.bw*1.6);V.py=clamp(y+V.bh/V.z,-V.bh*1.6,V.bh*1.6)},
+ pair=()=>{const a=pts[ids()[0]],b=pts[ids()[1]];return{d:Math.hypot(a[0]-b[0],a[1]-b[1])||1,m:[(a[0]+b[0])/2,(a[1]+b[1])/2]}};
+ let pv=null;
+ const reset=()=>goTo(p,V,V.home);
+ svg.addEventListener('pointerdown',e=>{if(e.pointerType=='mouse'&&e.button!==0)return;try{svg.setPointerCapture(e.pointerId)}catch(x){}pts[e.pointerId]=[e.clientX,e.clientY];V.tw=null;p.auto=false;moved=0;if(ids().length==2)pv=pair()});
+ svg.addEventListener('pointermove',e=>{const o=pts[e.pointerId];if(!o)return;const n=[e.clientX,e.clientY];pts[e.pointerId]=n;
+  if(ids().length==1){const dx=n[0]-o[0],dy=n[1]-o[1];moved+=Math.abs(dx)+Math.abs(dy);V.yaw=((V.yaw-dx*.6)%360+360)%360;if(big||e.pointerType=='mouse')V.pitch=clamp(V.pitch+dy*.5,-8,90);V.dirty=true;touch(p);e.preventDefault()}
+  else if(ids().length==2&&pv){const q=pair(),w=toVB(pv.m);moved+=9;V.z=clamp(V.z*q.d/pv.d,.7,6);place(q.m,w);pv=q;V.dirty=true;touch(p);e.preventDefault()}});
+ const up=e=>{if(!pts[e.pointerId])return;delete pts[e.pointerId];pv=null;if(ids().length==1)pv=null;
+  if(!ids().length&&moved<8){const t=Date.now();if(t-tapT<320){tapT=0;reset()}else tapT=t}};
+ svg.addEventListener('pointerup',up);svg.addEventListener('pointercancel',up);svg.addEventListener('dblclick',reset);
+ if(big)svg.addEventListener('wheel',e=>{e.preventDefault();const m=[e.clientX,e.clientY],w=toVB(m);V.z=clamp(V.z*Math.exp(-e.deltaY*.0015),.7,6);place(m,w);V.dirty=true;touch(p)},{passive:false})}
+function mount(el,name,o){o=o||{};stop(el);const X=A[name];if(!X){el.hidden=true;return null}prep(X);const F=fit(X);el.hidden=false;
+ const big=!!o.big,specs=o.views||(big?[PRE.tq]:X.V.map(k=>PRE[k])),wd=!big&&specs.length>1&&F.hw>F.hh*1.35,mir=o.mirror?' transform="scale(-1 1)"':'';
+ const sv=specs.map(()=>`<figure class="vf"><svg class="anv${big?' big':''}" role="img" aria-label="${name}"><g class="mg"${mir}><g class="gF"></g><g class="gS"></g><g class="gB"></g><g class="gD"></g><g class="gT"></g></g></svg><figcaption></figcaption></figure>`).join('');
+ const ctl=o.mini?'':`<button class="anb" data-ap>⏸</button><button class="anb" data-as>0,5×</button>${big?'<button class="anb" data-au>↻ Auto</button><button class="anb" data-rc>🎯 Recentrer</button>':'<button class="anb" data-ex>⛶ 3D</button>'}`,
+ chips=big?'<div class="chs">'+['pro','fac','tq','dos','top'].map(k=>`<button class="anb" data-pre="${k}">${PRE[k][2]}</button>`).join('')+'</div>':'';
+ el.innerHTML=(big?`<div class="bgv">${sv}</div>${chips}`:`<div class="anvs${wd?' wd':''}">${sv}</div>`)+`<div class="anl"><b class="anp"></b>${ctl}</div><div class="anbar"><i></i></div><div class="anc"></div>`+
+  (o.mini?'':`<div class="anh">${big?'1 doigt : tourner · 2 doigts : zoomer et déplacer · double-tap : recentrer':'↔ Glisse pour tourner · 🤏 pince pour zoomer · ⛶ plein écran 3D'}</div>`)+(!o.mini&&X.w?`<div class="anw2">⚠️ ${X.w}</div>`:'');
+ const svgs=[].slice.call(el.querySelectorAll('svg.anv')),caps=[].slice.call(el.querySelectorAll('figcaption'));
+ const p={el:el,X:X,F:F,t:0,sp:1,ps:false,vis:!io,li:-1,auto:false,big:big,
+  views:specs.map((s,i)=>{const g=c=>svgs[i].querySelector(c);return{yaw:s[0],pitch:s[1],z:1,px:0,py:0,home:s,dirty:true,tw:null,svg:svgs[i],cap:caps[i],gF:g('.gF'),gS:g('.gS'),gB:g('.gB'),gD:g('.gD'),gT:g('.gT')}}),
+  lp:el.querySelector('.anp'),lc:el.querySelector('.anc'),bar:el.querySelector('.anbar i')};
+ p.set=(i,yaw,pitch,z)=>{const V=p.views[i];V.yaw=yaw;V.pitch=pitch;V.z=z||1;V.px=0;V.py=0;V.dirty=true;frame(p)};
  el._an=p;PL.add(p);io&&io.observe(el);frame(p);
- if(!o.mini)el.onclick=ev=>{const b=ev.target.closest('button');if(!b)return;if(b.dataset.ap!=null){p.ps=!p.ps;b.textContent=p.ps?'▶':'⏸'}if(b.dataset.as!=null){p.sp=p.sp==1?.5:1;b.textContent=p.sp==1?'0,5×':'1×'}};
+ if(!o.mini){p.views.forEach(V=>gest(p,V));
+  el.onclick=ev=>{const b=ev.target.closest('button');if(!b)return;const d=b.dataset;
+   if(d.ap!=null){p.ps=!p.ps;b.textContent=p.ps?'▶':'⏸'}
+   if(d.as!=null){p.sp=p.sp==1?.5:1;b.textContent=p.sp==1?'0,5×':'1×'}
+   if(d.ex!=null)inspect(name,p.t);
+   if(d.au!=null){p.auto=!p.auto;b.classList.toggle('on',p.auto)}
+   if(d.rc!=null){p.auto=false;goTo(p,p.views[0],PRE.tq)}
+   if(d.pre!=null){p.auto=false;goTo(p,p.views[0],PRE[d.pre])}}}
  if(!run){run=1;last=0;requestAnimationFrame(loop)}return p}
+// plein écran 3D : une seule grande vue, rotation libre, zoom, déplacement, vues prédéfinies
+function inspect(name,t0){if(INS)return;const d=document.createElement('div');d.id='insp';d.setAttribute('role','dialog');d.setAttribute('aria-label','Vue 3D : '+name);
+ d.innerHTML=`<div class="ih"><b>${name}</b><button class="anb" data-ix>✕ Fermer</button></div><div class="ib"></div>`;document.body.appendChild(d);
+ const p=mount(d.querySelector('.ib'),name,{big:1});p.t=t0||0;INS={d:d,p:p};d.querySelector('[data-ix]').onclick=closeInsp}
+function closeInsp(){if(!INS)return false;stop(INS.d.querySelector('.ib'));INS.d.remove();INS=null;return true}
 function scan(root){root.querySelectorAll('[data-an]').forEach(el=>{if(!el._an)mount(el,el.dataset.an)})}
 // ---------- données des mouvements ----------
 const A={};
-return{A,mount,stop,scan,has:n=>!!A[n],prep,pose3,fig,stat,CAM,solve,lift}})();
+return{A:A,mount:mount,stop:stop,scan:scan,inspect:inspect,closeInsp:closeInsp,has:n=>!!A[n],prep:prep,pose3:pose3,fig:fig,fit:fit,mkcam:mkcam,solve:solve,lift:lift}})();
 
 // Angles en degrés : 0 = vers le bas, 90 = vers l'avant (droite), 180 = vers le haut.
 // t = angle du tronc (bassin→épaules). Bras (a, A) et jambes (l, L) en angles relatifs au tronc [segment haut, segment bas, échelle…]
@@ -820,7 +926,7 @@ function tick(){if(ps)return;left--;if(left<=0){ix++;if(ix>=st.length){clearInte
 $('#ts').onclick=()=>run(stl.flatMap(x=>hold(x)));
 $('#pa').onclick=()=>{ps=!ps;$('#pa').textContent=ps?'Reprendre':'Pause'};
 $('#sk').onclick=()=>{if(ix<st.length-1){ix++;load()}else{ix=st.length-1;left=0}};
-window.appBack=()=>{if(!$('#tm').hidden){$('#cl').click();return true}const cur=['s1','s2','s3','s4'].find(id=>!$('#'+id).hidden);
+window.appBack=()=>{if(AN.closeInsp&&AN.closeInsp())return true;if(!$('#tm').hidden){$('#cl').click();return true}const cur=['s1','s2','s3','s4'].find(id=>!$('#'+id).hidden);
  if(cur=='s3'){if(kind=='st')go(1);else go(2);return true}if(cur=='s2'||cur=='s4'){go(1);return true}return false};
 $('#cl').onclick=()=>{clearInterval(iv);$('#tm').hidden=true;$('#twd').hidden=true;AN.stop($("#ta"));aK=null};
 </script></body></html>
