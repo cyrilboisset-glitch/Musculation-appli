@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="fond">#141414</color>
-    <color name="orange">#E8590C</color>
+    <color name="fond">#0F0E0D</color>
+    <color name="or">#F0CF73</color>
+    <color name="tuile">#1A1816</color>
     <style name="AppTheme" parent="android:Theme.Material.NoActionBar">
-        <item name="android:colorPrimary">@color/orange</item>
-        <item name="android:colorAccent">@color/orange</item>
+        <item name="android:colorPrimary">@color/or</item>
+        <item name="android:colorAccent">@color/or</item>
         <item name="android:statusBarColor">@color/fond</item>
         <item name="android:navigationBarColor">@color/fond</item>
         <item name="android:windowBackground">@color/fond</item>

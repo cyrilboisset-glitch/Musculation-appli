@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Haltère : poignée + deux disques de chaque côté (zone utile 72 dp centrée dans 108 dp). -->
+<!-- Haltère dorée (disques or + cuivre) sur courbe de progression, charte GOATout. Zone utile 72 dp centrée dans 108 dp. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp" android:height="108dp"
     android:viewportWidth="108" android:viewportHeight="108">
-    <path android:fillColor="#FFFFFF" android:pathData="M40,51h28v6h-28z"/>
-    <path android:fillColor="#FFFFFF" android:pathData="M33,38h6a1.5,1.5 0,0 1,1.5 1.5v29a1.5,1.5 0,0 1,-1.5 1.5h-6a1.5,1.5 0,0 1,-1.5 -1.5v-29a1.5,1.5 0,0 1,1.5 -1.5z"/>
-    <path android:fillColor="#FFFFFF" android:pathData="M69,38h6a1.5,1.5 0,0 1,1.5 1.5v29a1.5,1.5 0,0 1,-1.5 1.5h-6a1.5,1.5 0,0 1,-1.5 -1.5v-29a1.5,1.5 0,0 1,1.5 -1.5z"/>
-    <path android:fillColor="#FFD8C2" android:pathData="M25,44h5a1.5,1.5 0,0 1,1.5 1.5v17a1.5,1.5 0,0 1,-1.5 1.5h-5a1.5,1.5 0,0 1,-1.5 -1.5v-17a1.5,1.5 0,0 1,1.5 -1.5z"/>
-    <path android:fillColor="#FFD8C2" android:pathData="M78,44h5a1.5,1.5 0,0 1,1.5 1.5v17a1.5,1.5 0,0 1,-1.5 1.5h-5a1.5,1.5 0,0 1,-1.5 -1.5v-17a1.5,1.5 0,0 1,1.5 -1.5z"/>
-    <path android:fillColor="#FFFFFF" android:pathData="M20,52h3.5v4h-3.5zM84.5,52h3.5v4h-3.5z"/>
+    <path android:strokeColor="#C99A34" android:strokeWidth="1.8" android:strokeLineJoin="round" android:strokeLineCap="round" android:fillColor="#00000000"
+        android:pathData="M22,78 L38,68 L48,72 L60,54 L70,60 L86,40"/>
+    <path android:fillColor="#F0CF73" android:pathData="M40,51.5h28v5h-28z"/>
+    <path android:fillColor="#F0CF73" android:pathData="M33,38h6a1.5,1.5 0,0 1,1.5 1.5v29a1.5,1.5 0,0 1,-1.5 1.5h-6a1.5,1.5 0,0 1,-1.5 -1.5v-29a1.5,1.5 0,0 1,1.5 -1.5z"/>
+    <path android:fillColor="#F0CF73" android:pathData="M69,38h6a1.5,1.5 0,0 1,1.5 1.5v29a1.5,1.5 0,0 1,-1.5 1.5h-6a1.5,1.5 0,0 1,-1.5 -1.5v-29a1.5,1.5 0,0 1,1.5 -1.5z"/>
+    <path android:fillColor="#C46F3F" android:pathData="M25,44h5a1.5,1.5 0,0 1,1.5 1.5v17a1.5,1.5 0,0 1,-1.5 1.5h-5a1.5,1.5 0,0 1,-1.5 -1.5v-17a1.5,1.5 0,0 1,1.5 -1.5z"/>
+    <path android:fillColor="#C46F3F" android:pathData="M78,44h5a1.5,1.5 0,0 1,1.5 1.5v17a1.5,1.5 0,0 1,-1.5 1.5h-5a1.5,1.5 0,0 1,-1.5 -1.5v-17a1.5,1.5 0,0 1,1.5 -1.5z"/>
+    <path android:fillColor="#FBE7A8" android:pathData="M33.5,40h2v26h-2zM69.5,40h2v26h-2z"/>
 </vector>
