@@ -226,7 +226,8 @@ function Stage(){
  const soles=[];B.mesh.updateMatrixWorld(true);
  for(const s of['L','R']){const fb=B.bones[B.BY['foot.'+s]],tb=B.bones[B.BY['toe1-1.'+s]],fh=META.bones[B.BY['foot.'+s]].h,th=META.bones[B.BY['toe1-1.'+s]].h;
   soles.push({b:fb,o:V3(0,-fh[1]+.4,-4.5)},{b:fb,o:V3(0,-fh[1]+.4,4)},{b:tb,o:V3(0,-th[1]+.4,4)})}
- return{R,S,BG,cvs,cam,B,I,db,key,rim,rim2,fill,fl,ring,ring2,soles,props:null,W:0,H:0,ray:new T.Raycaster()}}
+ const band=bandMesh();S.add(band);
+ return{R,S,BG,cvs,cam,B,I,db,band,key,rim,rim2,fill,fl,ring,ring2,soles,props:null,W:0,H:0,ray:new T.Raycaster()}}
 function setMask(u,list,map){const f=new Array(16).fill(0);(list||[]).forEach(m=>{(map?map[m]:[m]).forEach(k=>{const i=META.masks.indexOf(k);if(i>=0)f[i]=1})});for(let k=0;k<4;k++)u.value[k].set(f[k*4],f[k*4+1],f[k*4+2],f[k*4+3])}
 // cache par exercice : accessoires 3D, centre et rayon du cadrage
 function info(st,X){if(X.r3)return X.r3;const props=propMeshes(X);props.visible=false;st.S.add(props);
@@ -249,18 +250,33 @@ function blit(st,V,opt){const el=V.svg,dpr=Math.min(window.devicePixelRatio||1,o
 function out(st,V,s,mir){const ctx=V.ctx||(V.ctx=V.svg.getContext('2d'));ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,s.w,s.h);
  if(mir){ctx.translate(s.w,0);ctx.scale(-1,1)}ctx.drawImage(st.cvs,0,0,s.w,s.h,0,0,s.w,s.h)}
 function scene(st,tr){st.S.background=tr?null:st.BG;st.fl.visible=!tr;st.ring.visible=st.ring2.visible=!tr}
+// élastique tissu : ruban bleu en boucle autour des deux genoux, chevilles ou poignets
+function bandMesh(){const n=72,g=new T.BufferGeometry();g.setAttribute('position',new T.BufferAttribute(new Float32Array(n*2*3),3));g.setAttribute('normal',new T.BufferAttribute(new Float32Array(n*2*3),3));
+ const ix=[];for(let i=0;i<n;i++){const j=(i+1)%n;ix.push(i*2,j*2,i*2+1,i*2+1,j*2,j*2+1)}g.setIndex(ix);
+ const m=new T.Mesh(g,new T.MeshStandardMaterial({color:0x2a3fbf,roughness:.92,metalness:0,side:T.DoubleSide}));m.castShadow=true;m.frustumCulled=false;m.visible=false;m.n=n;return m}
+function bandPose(st,X){const m=st.band;if(!X||!X.el){m.visible=false;return}const P=n=>{const v=new T.Vector3();st.B.bones[st.B.BY[n]].getWorldPosition(v);return v};
+ let A,B,ax,r,bw=6.5;
+ if(X.el=='h'){const pa=P('wrist.L').lerp(P('finger3-1.L'),.35),pb=P('wrist.R').lerp(P('finger3-1.R'),.35);A=pa;B=pb;const ab=pb.clone().sub(pa).normalize();ax=new T.Vector3(0,1,0);ax.sub(ab.clone().multiplyScalar(ax.dot(ab)));if(ax.length()<.2)ax.set(0,0,1);ax.normalize();r=3.2;bw=6}
+ else{const t=X.el=='k'?['upperleg01','lowerleg01',.8]:['lowerleg01','foot',.82],a0=P(t[0]+'.L'),a1=P(t[1]+'.L'),b0=P(t[0]+'.R'),b1=P(t[1]+'.R');
+  A=a0.clone().lerp(a1,t[2]);B=b0.clone().lerp(b1,t[2]);ax=a1.clone().sub(a0).add(b1.clone().sub(b0)).normalize();r=X.el=='k'?6.6:4.6}
+ const u=B.clone().sub(A);u.sub(ax.clone().multiplyScalar(u.dot(ax)));if(u.length()<.01)u.set(1,0,0);u.normalize();const w=ax.clone().cross(u).normalize();
+ const n=m.n,pos=m.geometry.attributes.position,nor=m.geometry.attributes.normal,h=n/2,v=new T.Vector3(),d=new T.Vector3();
+ for(let i=0;i<n;i++){const c=i<h?B:A,a=i<h?(i/(h-1))*Math.PI-Math.PI/2:((i-h)/(h-1))*Math.PI+Math.PI/2;
+  d.copy(u).multiplyScalar(Math.cos(a)).addScaledVector(w,Math.sin(a));v.copy(c).addScaledVector(d,r);
+  for(let k=0;k<2;k++){const q=v.clone().addScaledVector(ax,(k?.5:-.5)*bw);pos.setXYZ(i*2+k,q.x,q.y,q.z);nor.setXYZ(i*2+k,d.x,d.y,d.z)}}
+ pos.needsUpdate=true;nor.needsUpdate=true;m.visible=true}
 const PKM={cuisses:['quad','psoas'],ischios:['isch'],dos:['dos','trap'],pecs:['pec'],abdos:['abs','obl'],fessiers:['glu'],lombaires:['lomb'],mollets:['calf'],biceps:['bic'],triceps:['tri'],epaules:['delt']};
 const ok=()=>{if(ST)return true;if(FAIL)return false;try{const t=document.createElement('canvas');if(!(t.getContext('webgl2')||t.getContext('webgl'))){FAIL=true;return false}ST=Stage();return true}catch(e){FAIL=true;window.console&&console.warn('3D indisponible',e);return false}};
 window.R3={ok,
  // un lecteur d'exercice : pose du moteur r, vue V
  draw(p,V,r){const st=ST,X=p.X,inf=info(st,X);const s=blit(st,V,p);if(!s)return;
   if(st.props!==inf.props){if(st.props)st.props.visible=false;inf.props.visible=true;st.props=inf.props}
-  st.name=p.name;applyPose(st,X,r);setMask(U.uP,X.m);setMask(U.uS,X.m2);setMask(U.uF,[]);U.uGlow.value=r.ef;U.uShow.value=p.ang?1:0;U.uTime.value=performance.now()/1000;
+  st.name=p.name;applyPose(st,X,r);bandPose(st,X);setMask(U.uP,X.m);setMask(U.uS,X.m2);setMask(U.uF,[]);U.uGlow.value=r.ef;U.uShow.value=p.ang?1:0;U.uTime.value=performance.now()/1000;
   scene(st,!!p.tr3);place(st,inf.c);aim(st,V,inf.c,inf.rad,s.asp,V.pitch>50?0:inf.hy,inf.hw);st.R.render(st.S,st.cam);out(st,V,s,p.mir);
   const n=AN.vname?AN.vname(V.yaw,V.pitch):'';if(V.cap&&V.cn!==n){V.cn=n;V.cap.textContent=n}V.dirty=false},
  // mannequin de choix des muscles
  drawPk(p,V,k,has){const st=ST,s=blit(st,V,p);if(!s)return;if(st.props){st.props.visible=false;st.props=null}
-  st.name='';applyPose(st,k.X,{Q:k.Q,P:k.P,ef:0});const sel=Object.keys(PKM).filter(has);
+  st.name='';applyPose(st,k.X,{Q:k.Q,P:k.P,ef:0});st.band.visible=false;const sel=Object.keys(PKM).filter(has);
   setMask(U.uP,sel,PKM);setMask(U.uS,[]);setMask(U.uF,Object.keys(PKM),PKM);U.uGlow.value=.55;U.uShow.value=1;U.uTime.value=0;
   const c=V3(0,87,0);scene(st,false);place(st,c);aim(st,V,c,96,s.asp,90,40);st.R.render(st.S,st.cam);out(st,V,s,false);
   V.pk={pos:st.cam.position.clone(),q:st.cam.quaternion.clone(),asp:s.asp};V.dirty=false},
@@ -273,3 +289,4 @@ window.R3={ok,
   [h.face.a,h.face.b,h.face.c].forEach(vi=>{for(let q=0;q<4;q++){const a=m['mA'+q];for(let c=0;c<4;c++){const v=a.array[vi*4+c]/255,nm=META.masks[q*4+c];if(!nm)continue;for(const g in PKM)if(PKM[g].indexOf(nm)>=0)sc[g]=(sc[g]||0)+v/3}}});
   for(const g in sc)if(sc[g]>bv){bv=sc[g];best=g}return best}};
 })();
+
